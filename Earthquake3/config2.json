@@ -1,0 +1,56 @@
+{
+    "name": "Earthquake",
+    "n_gpu": 1,
+
+    "arch": {
+        "type": "HED",
+        "args": {}
+    },
+    "data_loader": {
+
+        "type": "EarthquakeDataLoader",
+        "args":{
+            "data_dir": "data/",
+            "seismic_path": "/Users/shanyuhai/PycharmProjects/Earthquake/data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
+            "label_path": "/Users/shanyuhai/PycharmProjects/Earthquake/data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
+            "batch_size": 64,
+            "shuffle": true,
+            "validation_split": 0.1,
+            "num_workers": 1,
+            "number_of_pictures": 1
+        }
+    },
+    "loss": "cross_entropy_loss_HED",
+    "metrics": [
+        "IoU"
+    ],
+    "lr_scheduler2": {
+        "type": "ReduceLROnPlateau",
+        "args": {
+            "mode":"min",
+            "factor":0.1,
+            "patience":5,
+            "verbose":"True"
+        }
+    },
+    "trainer": {
+        "epochs": 4,
+        "modelNo":2,
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        "monitor": "min val_loss",
+        "early_stop": 10,
+        "tensorboard": true
+    },
+        "optimizer": {
+        "type": "SGD",
+        "args":{
+            "lr": 0.01,
+            "weight_decay": 0.0002,
+            "momentum":0.9
+        }
+    }
+
+}
+
