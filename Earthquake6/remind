@@ -1,0 +1,65 @@
+
+ # modelNo
+# Unet --> 0
+# Deeplab --> 1
+# HED --> 2
+# RCF --> 3
+# CED --> 4
+
+
+    #         loss = torch.zeros(1).to(device)
+    #         y_preds = outputs
+    #         if modelNo == 0 or modelNo == 1 or modelNo == 4:
+    # #             print("bceloss")
+    #             loss = bceloss(outputs, masks)
+    # #             loss = cross_entropy_loss_HED(outputs, masks)
+    # #             loss = nn.BCEWithLogitsLoss(outputs, masks)
+    #         elif modelNo == 2 or modelNo == 21:
+    #             for o in range(5):
+    #                 loss = loss + cross_entropy_loss_HED(outputs[o], masks)
+    #             loss = loss + bceloss(outputs[-1],masks)
+    #             y_preds = outputs[-1]
+    #         elif modelNo == 3:
+    #             for o in outputs:
+    #                 loss = loss + cross_entropy_loss_RCF(o, masks)
+    #             y_preds = outputs[-1]
+
+
+
+
+
+optimizer = torch.optim.SGD(model.parameters(), lr=1e-6, momentum=0.9, weight_decay=0.0002)
+print("optimizer = torch.optim.SGD(model.parameters(), lr=1e-6, momentum=0.9, weight_decay=0.0002)")
+if modelNo == 0 or modelNo == 1:
+    print("optimizer = torch.optim.Adam(model.parameters(), lr=0.01)")
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
+elif modelNo == 4:
+    optimizer = torch.optim.SGD(model.parameters(), lr=1e-5, momentum=0.99, weight_decay=0.0002)
+    print("optimizer = torch.optim.SGD(model.parameters(), lr=1e-5, momentum=0.99, weight_decay=0.0002)")
+scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'min',factor=0.1, patience=5, verbose=True)
+
+
+
+
+
+modelNo = 0
+if modelNo == 0:
+    from model_zoo.UNET import Unet
+    model = Unet()
+    print("use model Unet")
+elif modelNo == 1:
+    from model_zoo.DEEPLAB.deeplab import DeepLab
+    model = DeepLab(backbone='mobilenet', num_classes=1, output_stride=16)
+    print("use model DeepLab")
+elif modelNo == 2:
+    from model_zoo.HED import HED
+    model = HED()
+    print("use model HED")
+elif modelNo == 3:
+    from model_zoo.RCF import RCF
+    model = RCF()
+    print("use model RCF")
+else:
+    from model_zoo.UNET import Unet
+    model = Unet()
+    print("warning: default:use model Unet")
