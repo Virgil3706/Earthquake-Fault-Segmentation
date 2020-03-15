@@ -10,8 +10,8 @@
 
         "type": "EarthquakeDataLoader",
         "args":{
-            "seismic_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
-            "label_path": "data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
+            "seismic_path":"data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
+            "label_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
             "batch_size": 64,
             "train_number_of_pictures": 10,
             "val_number_of_pictures": 5,
@@ -54,8 +54,8 @@
 
         "type": "EarthquakeDataLoader2",
         "args":{
-            "seismic_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
-            "label_path": "data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
+            "seismic_path":"data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
+            "label_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
             "batch_size": 64,
             "val_number_of_pictures": 1,
             "val_start": 1

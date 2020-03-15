@@ -13,7 +13,7 @@
             "seismic_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
             "label_path": "data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
             "batch_size": 64,
-            "train_number_of_pictures": 20,
+            "train_number_of_pictures": 2,
             "val_number_of_pictures": 5,
             "train_start": 0,
             "val_start": 300
