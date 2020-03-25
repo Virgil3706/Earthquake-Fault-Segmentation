@@ -1,0 +1,428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="0b558fa8-f907-4aeb-aa62-40eb63533450" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DatabaseView">
+    <option name="SHOW_INTERMEDIATE" value="true" />
+    <option name="GROUP_DATA_SOURCES" value="true" />
+    <option name="GROUP_SCHEMA" value="true" />
+    <option name="GROUP_CONTENTS" value="false" />
+    <option name="SORT_POSITIONED" value="false" />
+    <option name="SHOW_EMPTY_GROUPS" value="false" />
+    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
+    <option name="HIDDEN_KINDS">
+      <set />
+    </option>
+    <expand />
+    <select />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="Earthquake3" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="Jupyter Notebook" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="JupyterTrust" id="c4f3f1e0-c4f0-40c6-962b-35719f05f853" />
+  <component name="ProjectId" id="1YDUc723Nl2VBqDKKAMEzj2cIFR" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/data_loader" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.666">
+    <configuration name="666" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-template" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/666.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="fault_visu" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-template" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/fault_visu.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="save_predicted_picture" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-template" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/save_predicted_picture.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-template" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/test.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="train" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-template" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/train.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.666" />
+        <item itemvalue="Python.save_predicted_picture" />
+        <item itemvalue="Python.test" />
+        <item itemvalue="Python.train" />
+        <item itemvalue="Python.fault_visu" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0b558fa8-f907-4aeb-aa62-40eb63533450" name="Default Changelist" comment="" />
+      <created>1582476734413</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1582476734413</updated>
+      <workItem from="1582476735656" duration="196000" />
+      <workItem from="1582478263117" duration="736000" />
+      <workItem from="1582514112969" duration="1586000" />
+      <workItem from="1582607831165" duration="3279000" />
+      <workItem from="1582719892105" duration="496000" />
+      <workItem from="1582730787633" duration="1461000" />
+      <workItem from="1582769878424" duration="5220000" />
+      <workItem from="1582798510496" duration="1003000" />
+      <workItem from="1582800447825" duration="2307000" />
+      <workItem from="1582803261816" duration="398000" />
+      <workItem from="1582803892701" duration="807000" />
+      <workItem from="1582808051556" duration="2814000" />
+      <workItem from="1582899610557" duration="939000" />
+      <workItem from="1582940618900" duration="61000" />
+      <workItem from="1582943523658" duration="10086000" />
+      <workItem from="1582967729093" duration="20093000" />
+      <workItem from="1583107833967" duration="7614000" />
+      <workItem from="1583119984245" duration="89000" />
+      <workItem from="1583129140548" duration="21767000" />
+      <workItem from="1583228496719" duration="55589000" />
+      <workItem from="1583455932692" duration="3296000" />
+      <workItem from="1583460250220" duration="10883000" />
+      <workItem from="1583490297665" duration="33350000" />
+      <workItem from="1583629451312" duration="28112000" />
+      <workItem from="1583670750536" duration="852000" />
+      <workItem from="1583676370761" duration="5217000" />
+      <workItem from="1583722789270" duration="20197000" />
+      <workItem from="1583759346676" duration="7210000" />
+      <workItem from="1583816275149" duration="6237000" />
+      <workItem from="1583895741831" duration="2193000" />
+      <workItem from="1583902440320" duration="75000" />
+      <workItem from="1583904455278" duration="6652000" />
+      <workItem from="1583925266527" duration="8061000" />
+      <workItem from="1583997017975" duration="3771000" />
+      <workItem from="1584003672529" duration="200000" />
+      <workItem from="1584003935223" duration="12440000" />
+      <workItem from="1584102054044" duration="14205000" />
+      <workItem from="1584164773011" duration="3574000" />
+      <workItem from="1584707136999" duration="792000" />
+      <workItem from="1584708198607" duration="2804000" />
+      <workItem from="1584719651384" duration="232000" />
+      <workItem from="1585136484503" duration="6529000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="240" y="67" key="#Log_Highlighting_(ideolog)" timestamp="1583152473755">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="240" y="67" key="#Log_Highlighting_(ideolog)/0.0.1280.800@0.0.1280.800" timestamp="1583152473755" />
+    <state x="304" y="210" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1584714869189">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="313" y="199" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.757@0.0.1280.757" timestamp="1583234225041" />
+    <state x="304" y="210" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1280.800@0.0.1280.800" timestamp="1584714869189" />
+    <state x="342" y="236" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1440.900@0.0.1440.900" timestamp="1583638406222" />
+    <state x="304" y="216" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1280.736@0.23.1280.736" timestamp="1583849026904" />
+    <state x="304" y="216" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1280.737@0.23.1280.737" timestamp="1583846900082" />
+    <state x="328" y="135" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1584102032290">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="328" y="135" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1280.800@0.0.1280.800" timestamp="1584102032290" />
+    <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1584170918142">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="378" y="154" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1280.800@0.0.1280.800" timestamp="1584170918142" />
+    <state x="333" y="29" key="#save_predicted_picture" timestamp="1585140936759">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="333" y="29" key="#save_predicted_picture/0.0.1280.800@0.0.1280.800" timestamp="1585140936759" />
+    <state width="1238" height="280" key="GridCell.Tab.0.bottom" timestamp="1585150719075">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="254" key="GridCell.Tab.0.bottom/0.0.1280.755@0.0.1280.755" timestamp="1583482858532" />
+    <state width="1238" height="172" key="GridCell.Tab.0.bottom/0.0.1280.757@0.0.1280.757" timestamp="1583238313571" />
+    <state width="1238" height="280" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1585150719075" />
+    <state width="1388" height="199" key="GridCell.Tab.0.bottom/0.0.1440.855@0.0.1440.855" timestamp="1583676574419" />
+    <state width="1396" height="206" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1583681058585" />
+    <state width="1238" height="299" key="GridCell.Tab.0.bottom/0.23.1280.732@0.23.1280.732" timestamp="1583989426991" />
+    <state width="1238" height="190" key="GridCell.Tab.0.bottom/0.23.1280.736@0.23.1280.736" timestamp="1583850076225" />
+    <state width="1238" height="190" key="GridCell.Tab.0.bottom/0.23.1280.737@0.23.1280.737" timestamp="1583850971334" />
+    <state width="1238" height="192" key="GridCell.Tab.0.bottom/0.23.1280.738@0.23.1280.738" timestamp="1583897959740" />
+    <state width="1388" height="192" key="GridCell.Tab.0.bottom/0.23.1440.832@0.23.1440.832" timestamp="1583671519399" />
+    <state width="1238" height="280" key="GridCell.Tab.0.center" timestamp="1585150719073">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="254" key="GridCell.Tab.0.center/0.0.1280.755@0.0.1280.755" timestamp="1583482858530" />
+    <state width="1238" height="172" key="GridCell.Tab.0.center/0.0.1280.757@0.0.1280.757" timestamp="1583238313571" />
+    <state width="1238" height="280" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1585150719073" />
+    <state width="1388" height="199" key="GridCell.Tab.0.center/0.0.1440.855@0.0.1440.855" timestamp="1583676574418" />
+    <state width="1396" height="206" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1583681058584" />
+    <state width="1238" height="299" key="GridCell.Tab.0.center/0.23.1280.732@0.23.1280.732" timestamp="1583989426990" />
+    <state width="1238" height="190" key="GridCell.Tab.0.center/0.23.1280.736@0.23.1280.736" timestamp="1583850076224" />
+    <state width="1238" height="190" key="GridCell.Tab.0.center/0.23.1280.737@0.23.1280.737" timestamp="1583850971333" />
+    <state width="1238" height="192" key="GridCell.Tab.0.center/0.23.1280.738@0.23.1280.738" timestamp="1583897959740" />
+    <state width="1388" height="192" key="GridCell.Tab.0.center/0.23.1440.832@0.23.1440.832" timestamp="1583671519397" />
+    <state width="1238" height="280" key="GridCell.Tab.0.left" timestamp="1585150719073">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="254" key="GridCell.Tab.0.left/0.0.1280.755@0.0.1280.755" timestamp="1583482858529" />
+    <state width="1238" height="172" key="GridCell.Tab.0.left/0.0.1280.757@0.0.1280.757" timestamp="1583238313570" />
+    <state width="1238" height="280" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1585150719073" />
+    <state width="1388" height="199" key="GridCell.Tab.0.left/0.0.1440.855@0.0.1440.855" timestamp="1583676574418" />
+    <state width="1396" height="206" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1583681058583" />
+    <state width="1238" height="299" key="GridCell.Tab.0.left/0.23.1280.732@0.23.1280.732" timestamp="1583989426989" />
+    <state width="1238" height="190" key="GridCell.Tab.0.left/0.23.1280.736@0.23.1280.736" timestamp="1583850076223" />
+    <state width="1238" height="190" key="GridCell.Tab.0.left/0.23.1280.737@0.23.1280.737" timestamp="1583850971333" />
+    <state width="1238" height="192" key="GridCell.Tab.0.left/0.23.1280.738@0.23.1280.738" timestamp="1583897959740" />
+    <state width="1388" height="192" key="GridCell.Tab.0.left/0.23.1440.832@0.23.1440.832" timestamp="1583671519397" />
+    <state width="1238" height="280" key="GridCell.Tab.0.right" timestamp="1585150719074">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="254" key="GridCell.Tab.0.right/0.0.1280.755@0.0.1280.755" timestamp="1583482858531" />
+    <state width="1238" height="172" key="GridCell.Tab.0.right/0.0.1280.757@0.0.1280.757" timestamp="1583238313571" />
+    <state width="1238" height="280" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1585150719074" />
+    <state width="1388" height="199" key="GridCell.Tab.0.right/0.0.1440.855@0.0.1440.855" timestamp="1583676574419" />
+    <state width="1396" height="206" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1583681058584" />
+    <state width="1238" height="299" key="GridCell.Tab.0.right/0.23.1280.732@0.23.1280.732" timestamp="1583989426990" />
+    <state width="1238" height="190" key="GridCell.Tab.0.right/0.23.1280.736@0.23.1280.736" timestamp="1583850076224" />
+    <state width="1238" height="190" key="GridCell.Tab.0.right/0.23.1280.737@0.23.1280.737" timestamp="1583850971334" />
+    <state width="1238" height="192" key="GridCell.Tab.0.right/0.23.1280.738@0.23.1280.738" timestamp="1583897959740" />
+    <state width="1388" height="192" key="GridCell.Tab.0.right/0.23.1440.832@0.23.1440.832" timestamp="1583671519398" />
+    <state width="1238" height="262" key="GridCell.Tab.1.bottom" timestamp="1584147791651">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="262" key="GridCell.Tab.1.bottom/0.0.1280.800@0.0.1280.800" timestamp="1584147791651" />
+    <state width="1238" height="227" key="GridCell.Tab.1.bottom/0.23.1280.732@0.23.1280.732" timestamp="1583752973670" />
+    <state width="1238" height="262" key="GridCell.Tab.1.center" timestamp="1584147791650">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="262" key="GridCell.Tab.1.center/0.0.1280.800@0.0.1280.800" timestamp="1584147791650" />
+    <state width="1238" height="227" key="GridCell.Tab.1.center/0.23.1280.732@0.23.1280.732" timestamp="1583752973669" />
+    <state width="1238" height="262" key="GridCell.Tab.1.left" timestamp="1584147791649">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="262" key="GridCell.Tab.1.left/0.0.1280.800@0.0.1280.800" timestamp="1584147791649" />
+    <state width="1238" height="227" key="GridCell.Tab.1.left/0.23.1280.732@0.23.1280.732" timestamp="1583752973669" />
+    <state width="1238" height="262" key="GridCell.Tab.1.right" timestamp="1584147791650">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state width="1238" height="262" key="GridCell.Tab.1.right/0.0.1280.800@0.0.1280.800" timestamp="1584147791650" />
+    <state width="1238" height="227" key="GridCell.Tab.1.right/0.23.1280.732@0.23.1280.732" timestamp="1583752973670" />
+    <state x="216" y="23" key="SettingsEditor" timestamp="1584163427908">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="187" y="32" key="SettingsEditor/0.0.1280.755@0.0.1280.755" timestamp="1583420505606" />
+    <state x="216" y="23" key="SettingsEditor/0.0.1280.800@0.0.1280.800" timestamp="1584163427908" />
+    <state x="241" y="0" key="SettingsEditor/0.0.1440.855@0.0.1440.855" timestamp="1583679725908" />
+    <state x="241" y="3" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1583645697089" />
+    <state x="294" y="237" key="com.intellij.ide.util.TipDialog" timestamp="1585136483602">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="294" y="234" key="com.intellij.ide.util.TipDialog/0.0.1280.757@0.0.1280.757" timestamp="1582514114576" />
+    <state x="294" y="237" key="com.intellij.ide.util.TipDialog/0.0.1280.800@0.0.1280.800" timestamp="1585136483602" />
+    <state x="294" y="237" key="com.intellij.ide.util.TipDialog/0.23.1280.732@0.23.1280.732" timestamp="1583816274869" />
+    <state x="294" y="239" key="com.intellij.ide.util.TipDialog/0.23.1280.738@0.23.1280.738" timestamp="1583902450613" />
+    <state x="374" y="255" width="689" height="486" key="find.popup" timestamp="1585139426660">
+      <screen x="0" y="0" width="1280" height="800" />
+    </state>
+    <state x="380" y="255" width="689" height="486" key="find.popup/0.0.1280.755@0.0.1280.755" timestamp="1583481819859" />
+    <state x="368" y="238" width="689" height="472" key="find.popup/0.0.1280.757@0.0.1280.757" timestamp="1583246739470" />
+    <state x="374" y="255" width="689" height="486" key="find.popup/0.0.1280.800@0.0.1280.800" timestamp="1585139426660" />
+    <state x="428" y="273" width="802" height="546" key="find.popup/0.0.1440.855@0.0.1440.855" timestamp="1583677997959" />
+    <state x="305" y="137" width="671" height="619" key="search.everywhere.popup" timestamp="1583759737228">
+      <screen x="0" y="23" width="1280" height="732" />
+    </state>
+    <state x="305" y="124" width="670" height="676" key="search.everywhere.popup/0.0.1280.800@0.0.1280.800" timestamp="1583025943370" />
+    <state x="343" y="140" width="754" height="761" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1583680392117" />
+    <state x="305" y="137" width="671" height="619" key="search.everywhere.popup/0.23.1280.732@0.23.1280.732" timestamp="1583759737228" />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/pytorch_template$train.coverage" NAME="train Coverage Results" MODIFIED="1582813325488" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$abcdefg.coverage" NAME="abcdefg Coverage Results" MODIFIED="1583748442311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake5$predict_visu.coverage" NAME="predict_visu Coverage Results" MODIFIED="1584107792095" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake4$train.coverage" NAME="train Coverage Results" MODIFIED="1583925343421" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pytorch_template$loss.coverage" NAME="loss Coverage Results" MODIFIED="1582943279159" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/model" />
+    <SUITE FILE_PATH="coverage/Earthquake4$666.coverage" NAME="666 Coverage Results" MODIFIED="1583981875246" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$save_predicted_picture.coverage" NAME="save_predicted_picture Coverage Results" MODIFIED="1583897869623" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$visu3.coverage" NAME="fault_visu Coverage Results" MODIFIED="1583896772611" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake4$complicate.coverage" NAME="complicate Coverage Results" MODIFIED="1584002793261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$train.coverage" NAME="train Coverage Results" MODIFIED="1583400837071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$savePredNpy_thebetest_smoothmerge.coverage" NAME="savePredNpy_thebetest_smoothmerge Coverage Results" MODIFIED="1583845236838" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake6$test.coverage" NAME="test Coverage Results" MODIFIED="1584707575179" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pytorch_template$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1582801218992" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake4$fault_visu.coverage" NAME="fault_visu Coverage Results" MODIFIED="1583981317870" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake6$train.coverage" NAME="train Coverage Results" MODIFIED="1584707367578" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake6$save_predicted_picture.coverage" NAME="save_predicted_picture Coverage Results" MODIFIED="1584707946843" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$test.coverage" NAME="test Coverage Results" MODIFIED="1583846648893" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$test.coverage" NAME="test Coverage Results" MODIFIED="1583422681449" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake5$train.coverage" NAME="train Coverage Results" MODIFIED="1584174392174" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake7$test.coverage" NAME="test Coverage Results" MODIFIED="1585139544831" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$test_save_test.coverage" NAME="test_save_test Coverage Results" MODIFIED="1583680917737" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$pytorchtools3.coverage" NAME="pytorchtools3 Coverage Results" MODIFIED="1582943715302" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake5$666.coverage" NAME="666 Coverage Results" MODIFIED="1584107780071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$test_save.coverage" NAME="test_save Coverage Results" MODIFIED="1583752256128" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake5$save_predicted_picture.coverage" NAME="save_predicted_picture Coverage Results" MODIFIED="1584153294565" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$label_visu.coverage" NAME="label_visu Coverage Results" MODIFIED="1583896781508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake7$666.coverage" NAME="666 Coverage Results" MODIFIED="1585150549654" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$train123.coverage" NAME="train123 Coverage Results" MODIFIED="1583408331126" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake5$fault_visu.coverage" NAME="fault_visu Coverage Results" MODIFIED="1584150614139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$train2.coverage" NAME="train2 Coverage Results" MODIFIED="1583422509948" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$train900200.coverage" NAME="train900200 Coverage Results" MODIFIED="1583398846311" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$train900200.coverage" NAME="train900200 Coverage Results" MODIFIED="1583847247317" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake4$test.coverage" NAME="test Coverage Results" MODIFIED="1583931456741" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$train.coverage" NAME="train Coverage Results" MODIFIED="1583896292912" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$functions.coverage" NAME="functions Coverage Results" MODIFIED="1582943973381" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pytorch_template$data_loaders.coverage" NAME="data_loaders Coverage Results" MODIFIED="1582943290403" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/data_loader" />
+    <SUITE FILE_PATH="coverage/Earthquake$ak.coverage" NAME="ak Coverage Results" MODIFIED="1582944124490" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$train2.coverage" NAME="train2 Coverage Results" MODIFIED="1583572215538" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake5$complicate.coverage" NAME="complicate Coverage Results" MODIFIED="1584006010004" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pytorch_template$test.coverage" NAME="test Coverage Results" MODIFIED="1582810395933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/pytorch_template$aaa.coverage" NAME="aaa Coverage Results" MODIFIED="1582943331322" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake7$save_predicted_picture.coverage" NAME="save_predicted_picture Coverage Results" MODIFIED="1585148953348" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$npy.coverage" NAME="npy Coverage Results" MODIFIED="1583479465898" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake$trainer.coverage" NAME="trainer Coverage Results" MODIFIED="1583054269980" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/trainer" />
+    <SUITE FILE_PATH="coverage/Earthquake4$save_predicted_picture.coverage" NAME="save_predicted_picture Coverage Results" MODIFIED="1583931674078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake5$test.coverage" NAME="test Coverage Results" MODIFIED="1584152972471" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$test_and_save.coverage" NAME="test and save Coverage Results" MODIFIED="1583724248006" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$visu.coverage" NAME="visu Coverage Results" MODIFIED="1583850958492" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake3$test_save_3.coverage" NAME="test_save_3 Coverage Results" MODIFIED="1583681058575" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
