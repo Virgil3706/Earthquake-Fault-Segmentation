@@ -442,3 +442,155 @@ class EarthquakeDataLoader2():
                                                   shuffle=False)
 
         return test_loader,faults_dataset_test
+
+    
+# 3d train/validation/test  用此dataloader
+class EarthquakeDataLoader3d():
+    def __init__(self,seismic_path,label_path,batch_size,train_number=1, val_number=1,train_start=1,val_start=0,dimension=0):
+        self.train_loader,self.val_loader = self.train_val_dataset(seismic_path,label_path,batch_size,train_number, val_number,train_start,val_start,dimension)
+
+    def train_val_dataset(self, seismic_path,label_path, batch_size, train_number, val_number, train_start, val_start, dimension):
+
+        os.environ["CUDA_VISIBLE_DEVICES"] = "3"  # Only GPU 1 is visible to this code
+
+        seismic = np.load(seismic_path)
+        fault = np.load(label_path)
+
+        splitsize = 64
+        stepsize = 48
+        pixelThre = int(0.03 * splitsize * splitsize * splitsize)
+
+        # train_dataset
+
+        t_start = time.time()
+
+        def split3D(vol, l, step):
+            smallVols = []
+            r = int(l / 2)
+            for i in range(r, vol.shape[0] - r + 1, step):
+                for j in range(r, vol.shape[1] - r + 1, step):
+                    for k in range(r, vol.shape[2] - r + 1, step):
+                        smallVols.append(vol[i - r:i + r, j - r:j + r, k - r:k + r])
+
+            return smallVols
+
+        X_train = np.asarray(split3D(seismic[train_start:train_number+train_start,:,:], 64, 48), dtype=np.float32)
+        Y_train = np.asarray(split3D(fault[train_start:train_number+train_start,:,:], 64, 48), dtype=np.float32)
+
+        X_val = np.asarray(split3D(seismic[val_start:val_number+val_start,:,:], 64, 48), dtype=np.float32)
+        Y_val = np.asarray(split3D(fault[val_start:val_number+val_start,:,:], 64, 48), dtype=np.float32)
+
+        # t = (Y_train.sum((1, 2, 3)) < pixelThre)
+        # no_label_element_index = list(compress(range(len(t)), t))
+        # Y_train = np.delete(Y_train, no_label_element_index, 0)
+        # X_train = np.delete(X_train, no_label_element_index, 0)
+
+        # t = (Y_val.sum((1, 2, 3)) < pixelThre)
+        # no_label_element_index = list(compress(range(len(t)), t))
+        # Y_val = np.delete(Y_val, no_label_element_index, 0)
+        # X_val = np.delete(X_val, no_label_element_index, 0)
+
+        print('-----------><', X_train.shape)
+        print(Y_train.shape)
+
+
+        # if len(Y_train.shape) == 3:
+        #     Y_train = np.expand_dims(Y_train, axis=-1)
+        # if len(X_train.shape) == 3:
+        #     X_train = np.expand_dims(X_train, axis=-1)
+
+        X_train = np.expand_dims(X_train, axis=1)
+        Y_train = np.expand_dims(Y_train, axis=1)
+        
+        # if len(Y_val.shape) == 3:
+        #     Y_val = np.expand_dims(Y_val, axis=-1)
+        # if len(X_val.shape) == 3:
+        #     X_val = np.expand_dims(X_val, axis=-1)
+
+        X_val = np.expand_dims(X_val, axis=1)
+        Y_val = np.expand_dims(Y_val, axis=1)
+
+
+        print("X_train", X_train.shape)
+        print("X_val", X_val.shape)
+
+        print("Y_train", Y_train.shape)
+        print("Y_val", Y_val.shape)
+
+        print('=================', X_train.max(), X_train.min(), Y_train.max(), Y_train.min())
+        print('====================', X_val.max(), X_val.min(), Y_val.max(), Y_val.min())
+
+
+        class faultsDataset(torch.utils.data.Dataset):
+            def __init__(self, preprocessed_images, train=True, preprocessed_masks=None):
+                """
+                Args:
+                    text_file(string): path to text file
+                    root_dir(string): directory with all train images
+                """
+                self.train = train
+                self.images = preprocessed_images
+                self.masks = preprocessed_masks
+
+            def __len__(self):
+                return len(self.images)
+
+            def __getitem__(self, idx):
+                image = self.images[idx]
+                mask = self.masks[idx]
+                return (image, mask)
+
+        faults_dataset_train = faultsDataset(X_train, train=True, preprocessed_masks=Y_train)
+        faults_dataset_val = faultsDataset(X_val, train=False, preprocessed_masks=Y_val)
+
+
+        train_loader = torch.utils.data.DataLoader(dataset=faults_dataset_train,
+                                                   batch_size=batch_size,
+                                                   shuffle=True)
+        val_loader = torch.utils.data.DataLoader(dataset=faults_dataset_val,
+                                                 batch_size=batch_size,
+                                                 shuffle=False)
+        return train_loader,val_loader
+
+# save——predicted——picture 用此dataloader
+class EarthquakeDataLoader3dtest():
+    def __init__(self,seismic_path,label_path,batch_size, test_number_of_pictures,test_start,dimension=0):
+       self.test_loader,self.faults_dataset_test = self.test_dataset(seismic_path,batch_size, test_number_of_pictures,test_start,dimension)
+
+    def test_dataset(self, seismic_path, batch_size, test_number_of_pictures, test_start,dimension):
+        seis = np.load(seismic_path)
+
+        def split3D(vol, l, step):
+            smallVols = []
+            r = int(l / 2)
+            for i in range(r, vol.shape[0] - r + 1, step):
+                for j in range(r, vol.shape[1] - r + 1, step):
+                    for k in range(r, vol.shape[2] - r + 1, step):
+                        smallVols.append(vol[i - r:i + r, j - r:j + r, k - r:k + r])
+            return smallVols
+        X_test = np.asarray(split3D(seis[test_start:test_start+test_number_of_pictures,:,:], 64, 48), dtype=np.float32)
+        print(X_test.shape)
+        X = np.expand_dims(X_test, axis=1)
+        print(X.shape)
+
+        class faultsDataset(torch.utils.data.Dataset):
+
+            def __init__(self, preprocessed_images):
+
+                self.images = preprocessed_images
+
+            def __len__(self):
+                return len(self.images)
+
+            def __getitem__(self, idx):
+                image = self.images[idx]
+                return image
+
+        faults_dataset_test = faultsDataset(X)
+
+        test_loader = torch.utils.data.DataLoader(dataset=faults_dataset_test,
+                                                  batch_size=batch_size,
+                                                  shuffle=False)
+
+        return test_loader, faults_dataset_test
+
