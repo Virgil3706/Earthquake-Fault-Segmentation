@@ -87,7 +87,7 @@ class Trainer(BaseTrainer):
             y_preds = outputs
             bceloss = nn.BCELoss()
 
-            if modelNo == 0 or modelNo == 1:
+            if modelNo == 0 or modelNo == 1 or modelNo == 4:
                 #             print("bceloss")
 
                 loss = self.criterion(outputs, masks)
@@ -128,8 +128,9 @@ class Trainer(BaseTrainer):
                     loss.item()))
                 # self.writer.add_image('input', make_grid(data.to(device), nrow=8, normalize=True))
                 # self.writer.add_pr_curve(tag = 'precision_recall_curve',labels=masks,predictions=predicted_mask)
-                self.writer.add_image('input', make_grid(data.to(device), nrow=8, normalize=True))
-                self.writer.add_pr_curve('precision_recall_curve', 1, masks, y_preds)
+                if modelNo != 4:
+                    self.writer.add_image('input', make_grid(data.to(device), nrow=8, normalize=True))
+                    self.writer.add_pr_curve('precision_recall_curve', 1, masks, y_preds)
 
             # a,b,c,d,e,f=PR(predicted_mask, masks)
             # self.writer.add_pr_curve_raw('precision_recall_curve1',0,torch.tensor(a),torch.tensor(b),torch.tensor(c),torch.tensor(d),torch.tensor(e),torch.tensor(f))
@@ -168,7 +169,7 @@ class Trainer(BaseTrainer):
             outputs = self.model(data)
             loss = torch.zeros(1).to(device)
             y_preds = outputs
-            if modelNo == 0 or modelNo == 1:
+            if modelNo == 0 or modelNo == 1 or modelNo == 4:
                 #             print("bceloss")
 
                 loss = self.criterion(outputs, masks)
@@ -192,8 +193,9 @@ class Trainer(BaseTrainer):
             self.valid_metrics.update('loss', loss.item())
             for met in self.metric_ftns:
                 self.valid_metrics.update(met.__name__, met(predicted_mask, masks))
-            self.writer.add_image('input', make_grid(data.to(device), nrow=8, normalize=True))
-            self.writer.add_pr_curve('precision_recall_curve', 1, masks, y_preds)
+            if modelNo != 4:
+                self.writer.add_image('input', make_grid(data.to(device), nrow=8, normalize=True))
+                self.writer.add_pr_curve('precision_recall_curve', 1, masks, y_preds)
             # add histogram of model parameters to the tensorboard
         for name, p in self.model.named_parameters():
             self.writer.add_histogram(name, p, bins='auto')
