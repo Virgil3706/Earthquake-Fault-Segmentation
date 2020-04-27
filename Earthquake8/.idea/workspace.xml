@@ -60,7 +60,29 @@
       <recent name="$PROJECT_DIR$/data_loader" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.train">
+  <component name="RunManager" selected="Python.GAN2">
+    <configuration name="GAN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="pytorch-template" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/GAN.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="fault_visu" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pytorch-template" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -149,35 +171,13 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="transfer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="pytorch-template" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/transfer.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Python.GAN2" />
         <item itemvalue="Python.train" />
         <item itemvalue="Python.save_predicted_picture" />
         <item itemvalue="Python.read" />
         <item itemvalue="Python.fault_visu" />
-        <item itemvalue="Python.transfer" />
       </list>
     </recent_temporary>
   </component>
@@ -250,6 +250,7 @@
       <workItem from="1587181733567" duration="104000" />
       <workItem from="1587446213147" duration="735000" />
       <workItem from="1587446967207" duration="3000" />
+      <workItem from="1587982687923" duration="1722000" />
     </task>
     <servers />
   </component>
@@ -287,8 +288,8 @@
       <screen x="0" y="0" width="1280" height="800" />
     </state>
     <state x="333" y="29" key="#save_predicted_picture/0.0.1280.800@0.0.1280.800" timestamp="1585140936759" />
-    <state width="815" height="269" key="GridCell.Tab.0.bottom" timestamp="1587446957394">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="267" key="GridCell.Tab.0.bottom" timestamp="1587984414992">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="855" height="270" key="GridCell.Tab.0.bottom/0.0.1280.737@0.0.1280.737" timestamp="1586349277742" />
     <state width="848" height="152" key="GridCell.Tab.0.bottom/0.0.1280.739@0.0.1280.739" timestamp="1587031405153" />
@@ -301,13 +302,14 @@
     <state width="815" height="269" key="GridCell.Tab.0.bottom/0.0.1280.800@0.0.1280.800" timestamp="1587446957394" />
     <state width="1388" height="199" key="GridCell.Tab.0.bottom/0.0.1440.855@0.0.1440.855" timestamp="1583676574419" />
     <state width="1396" height="206" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1583681058585" />
+    <state width="1878" height="267" key="GridCell.Tab.0.bottom/0.0.1920.1080@0.0.1920.1080" timestamp="1587984414992" />
     <state width="1238" height="299" key="GridCell.Tab.0.bottom/0.23.1280.732@0.23.1280.732" timestamp="1583989426991" />
     <state width="1238" height="190" key="GridCell.Tab.0.bottom/0.23.1280.736@0.23.1280.736" timestamp="1583850076225" />
     <state width="1238" height="190" key="GridCell.Tab.0.bottom/0.23.1280.737@0.23.1280.737" timestamp="1583850971334" />
     <state width="1238" height="192" key="GridCell.Tab.0.bottom/0.23.1280.738@0.23.1280.738" timestamp="1583897959740" />
     <state width="1388" height="192" key="GridCell.Tab.0.bottom/0.23.1440.832@0.23.1440.832" timestamp="1583671519399" />
-    <state width="815" height="269" key="GridCell.Tab.0.center" timestamp="1587446957392">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="267" key="GridCell.Tab.0.center" timestamp="1587984414990">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="855" height="270" key="GridCell.Tab.0.center/0.0.1280.737@0.0.1280.737" timestamp="1586349277741" />
     <state width="848" height="152" key="GridCell.Tab.0.center/0.0.1280.739@0.0.1280.739" timestamp="1587031405152" />
@@ -320,13 +322,14 @@
     <state width="815" height="269" key="GridCell.Tab.0.center/0.0.1280.800@0.0.1280.800" timestamp="1587446957392" />
     <state width="1388" height="199" key="GridCell.Tab.0.center/0.0.1440.855@0.0.1440.855" timestamp="1583676574418" />
     <state width="1396" height="206" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1583681058584" />
+    <state width="1878" height="267" key="GridCell.Tab.0.center/0.0.1920.1080@0.0.1920.1080" timestamp="1587984414990" />
     <state width="1238" height="299" key="GridCell.Tab.0.center/0.23.1280.732@0.23.1280.732" timestamp="1583989426990" />
     <state width="1238" height="190" key="GridCell.Tab.0.center/0.23.1280.736@0.23.1280.736" timestamp="1583850076224" />
     <state width="1238" height="190" key="GridCell.Tab.0.center/0.23.1280.737@0.23.1280.737" timestamp="1583850971333" />
     <state width="1238" height="192" key="GridCell.Tab.0.center/0.23.1280.738@0.23.1280.738" timestamp="1583897959740" />
     <state width="1388" height="192" key="GridCell.Tab.0.center/0.23.1440.832@0.23.1440.832" timestamp="1583671519397" />
-    <state width="815" height="269" key="GridCell.Tab.0.left" timestamp="1587446957392">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="267" key="GridCell.Tab.0.left" timestamp="1587984414990">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="855" height="270" key="GridCell.Tab.0.left/0.0.1280.737@0.0.1280.737" timestamp="1586349277741" />
     <state width="848" height="152" key="GridCell.Tab.0.left/0.0.1280.739@0.0.1280.739" timestamp="1587031405152" />
@@ -339,13 +342,14 @@
     <state width="815" height="269" key="GridCell.Tab.0.left/0.0.1280.800@0.0.1280.800" timestamp="1587446957392" />
     <state width="1388" height="199" key="GridCell.Tab.0.left/0.0.1440.855@0.0.1440.855" timestamp="1583676574418" />
     <state width="1396" height="206" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1583681058583" />
+    <state width="1878" height="267" key="GridCell.Tab.0.left/0.0.1920.1080@0.0.1920.1080" timestamp="1587984414990" />
     <state width="1238" height="299" key="GridCell.Tab.0.left/0.23.1280.732@0.23.1280.732" timestamp="1583989426989" />
     <state width="1238" height="190" key="GridCell.Tab.0.left/0.23.1280.736@0.23.1280.736" timestamp="1583850076223" />
     <state width="1238" height="190" key="GridCell.Tab.0.left/0.23.1280.737@0.23.1280.737" timestamp="1583850971333" />
     <state width="1238" height="192" key="GridCell.Tab.0.left/0.23.1280.738@0.23.1280.738" timestamp="1583897959740" />
     <state width="1388" height="192" key="GridCell.Tab.0.left/0.23.1440.832@0.23.1440.832" timestamp="1583671519397" />
-    <state width="815" height="269" key="GridCell.Tab.0.right" timestamp="1587446957393">
-      <screen x="0" y="0" width="1280" height="800" />
+    <state width="1878" height="267" key="GridCell.Tab.0.right" timestamp="1587984414991">
+      <screen x="0" y="0" width="1920" height="1080" />
     </state>
     <state width="855" height="270" key="GridCell.Tab.0.right/0.0.1280.737@0.0.1280.737" timestamp="1586349277742" />
     <state width="848" height="152" key="GridCell.Tab.0.right/0.0.1280.739@0.0.1280.739" timestamp="1587031405152" />
@@ -358,6 +362,7 @@
     <state width="815" height="269" key="GridCell.Tab.0.right/0.0.1280.800@0.0.1280.800" timestamp="1587446957393" />
     <state width="1388" height="199" key="GridCell.Tab.0.right/0.0.1440.855@0.0.1440.855" timestamp="1583676574419" />
     <state width="1396" height="206" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1583681058584" />
+    <state width="1878" height="267" key="GridCell.Tab.0.right/0.0.1920.1080@0.0.1920.1080" timestamp="1587984414991" />
     <state width="1238" height="299" key="GridCell.Tab.0.right/0.23.1280.732@0.23.1280.732" timestamp="1583989426990" />
     <state width="1238" height="190" key="GridCell.Tab.0.right/0.23.1280.736@0.23.1280.736" timestamp="1583850076224" />
     <state width="1238" height="190" key="GridCell.Tab.0.right/0.23.1280.737@0.23.1280.737" timestamp="1583850971334" />
@@ -462,10 +467,12 @@
     <SUITE FILE_PATH="coverage/Earthquake$train.coverage" NAME="train Coverage Results" MODIFIED="1583400837071" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Earthquake4$save_predicted_picture.coverage" NAME="save_predicted_picture Coverage Results" MODIFIED="1583931674078" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Earthquake7$train.coverage" NAME="train Coverage Results" MODIFIED="1587446611609" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake8$GAN2.coverage" NAME="GAN Coverage Results" MODIFIED="1587984022812" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Earthquake5$fault_visu.coverage" NAME="fault_visu Coverage Results" MODIFIED="1584150614139" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Earthquake7$transfer.coverage" NAME="transfer Coverage Results" MODIFIED="1586940063551" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Earthquake3$test_save.coverage" NAME="test_save Coverage Results" MODIFIED="1583752256128" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Earthquake3$visu3.coverage" NAME="fault_visu Coverage Results" MODIFIED="1583896772611" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Earthquake8$train.coverage" NAME="train Coverage Results" MODIFIED="1587982739804" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Earthquake4$complicate.coverage" NAME="complicate Coverage Results" MODIFIED="1584002793261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>
