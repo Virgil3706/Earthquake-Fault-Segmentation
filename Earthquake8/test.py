@@ -11,7 +11,7 @@ from parse_config import ConfigParser
 from functions import *
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 splitsize=96
-import matplotlib; matplotlib.use('TkAgg')
+import matplotlib;
 
 
 
@@ -26,7 +26,8 @@ def main(config):
         batch_size=config['data_loader2']['args']['batch_size'],
         val_number_of_pictures=config['data_loader2']['args']['val_number_of_pictures'],
         val_start=config['data_loader2']['args']['val_start'],
-        dimension=config['data_loader2']['args']['dimension']
+        dimension=config['data_loader2']['args']['dimension'],
+        test = config['data_loader2']['args']['dimension']
     )
     data_loader = data_loader.val_loader
 

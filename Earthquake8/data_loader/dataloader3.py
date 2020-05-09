@@ -5,13 +5,13 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # train/validation/test  用此dataloader
 class EarthquakeDataLoader():
-    def __init__(self,seismic_path,label_path,batch_size,train_number_of_pictures=1, val_number_of_pictures=1,train_start=1,val_start=0,dimension=0):
-        self.train_loader,self.val_loader = self.train_val_dataset(seismic_path,label_path,batch_size,train_number_of_pictures, val_number_of_pictures,train_start,val_start,dimension)
+    def __init__(self,seismic_path,label_path,batch_size,train_number_of_pictures=1, val_number_of_pictures=1,train_start=1,val_start=0,dimension=0,test=-1):
+        self.train_loader,self.val_loader = self.train_val_dataset(seismic_path,label_path,batch_size,train_number_of_pictures, val_number_of_pictures,train_start,val_start,dimension,test)
 
-    def train_val_dataset(self, seismic_path,label_path, batch_size, train_number_of_pictures, val_number_of_pictures, train_start, val_start,dimension):
+    def train_val_dataset(self, seismic_path,label_path, batch_size, train_number_of_pictures, val_number_of_pictures, train_start, val_start,dimension,test):
         # dimension=1;
 
-        os.environ["CUDA_VISIBLE_DEVICES"] = "3"  # Only GPU 1 is visible to this code
+        # os.environ["CUDA_VISIBLE_DEVICES"] = "3"  # Only GPU 1 is visible to this code
         time1 = time.time()
         # print("RandomBrightnessContrast")
         # modelNo
@@ -57,6 +57,9 @@ class EarthquakeDataLoader():
         stepsize = 48
         overlapsize = splitsize - stepsize
         pixelThre = int(0.03 * splitsize * splitsize)
+        if(test==dimension):
+          pixelThre=0
+          print("\n mode: test!")
         # print("pixelThre ",pixelThre)
 
         # In[8]:
@@ -446,10 +449,12 @@ class EarthquakeDataLoader2():
     
 # 3d train/validation/test  用此dataloader
 class EarthquakeDataLoader3d():
-    def __init__(self,seismic_path,label_path,batch_size,train_number=1, val_number=1,train_start=1,val_start=0,dimension=0):
-        self.train_loader,self.val_loader = self.train_val_dataset(seismic_path,label_path,batch_size,train_number, val_number,train_start,val_start,dimension)
+    def __init__(self,seismic_path,label_path,batch_size,train_number=1, val_number=1,train_start=1,val_start=0,dimension=0,test=-1):
+        self.train_loader,self.val_loader = self.train_val_dataset(seismic_path,label_path,batch_size,train_number, val_number,train_start,val_start,dimension,test)
 
-    def train_val_dataset(self, seismic_path,label_path, batch_size, train_number, val_number, train_start, val_start, dimension):
+    def train_val_dataset(self, seismic_path,label_path, batch_size, train_number, val_number, train_start, val_start, dimension,test):
+
+
 
         os.environ["CUDA_VISIBLE_DEVICES"] = "3"  # Only GPU 1 is visible to this code
 
@@ -459,7 +464,9 @@ class EarthquakeDataLoader3d():
         splitsize = 64
         stepsize = 48
         pixelThre = int(0.03 * splitsize * splitsize * splitsize)
-
+        if(test==dimension):
+          pixelThre=0
+          print("\n mode: test!")
         # train_dataset
 
         t_start = time.time()
