@@ -193,7 +193,8 @@ class Trainer(BaseTrainer):
             self.valid_metrics.update('loss', loss.item())
             for met in self.metric_ftns:
                 self.valid_metrics.update(met.__name__, met(predicted_mask, masks))
-            if modelNo != 4:
+            #10000 preserved for GAN
+            if modelNo != 10000:
                 self.writer.add_image('input', make_grid(data.to(device), nrow=8, normalize=True))
                 self.writer.add_pr_curve('precision_recall_curve', 1, masks, y_preds)
             # add histogram of model parameters to the tensorboard

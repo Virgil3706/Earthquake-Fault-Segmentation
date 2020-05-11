@@ -50,6 +50,15 @@ def main(config):
 
     logger.info('Loading checkpoint: {} ...'.format(config.resume))
 
+    import torch
+    from abc import abstractmethod
+    from numpy import inf
+    from logger import TensorboardWriter
+    cfg_trainer = config['trainer']
+    writer = TensorboardWriter(config.log_dir, logger, cfg_trainer['tensorboard'])
+
+
+
     checkpoint = torch.load(config.resume,map_location=device)
     state_dict = checkpoint['state_dict']
     if config['n_gpu'] > 1:
@@ -98,6 +107,15 @@ def main(config):
             # print("val_loss\n",loss.data)
 
             predicted_mask = y_preds > best_iou_threshold
+            writer.set_step(1, 'test')
+            writer.add_pr_curve('precision_recall_curve', 1, masks, y_preds)
+            from utils import inf_loop, MetricTracker
+
+            # valid_metrics.update('loss', loss.item())
+            # for met in metric_fns:
+            #     valid_metrics.update(met.__name__, met(predicted_mask, masks))
+
+
 
             batch_size = data.shape[0]
             total_loss += loss.item() * batch_size
@@ -109,6 +127,10 @@ def main(config):
         log.update({
             met.__name__: total_metrics[i].item() / n_samples for i, met in enumerate(metric_fns)
         })
+        valid_metrics = MetricTracker('loss', *[m.__name__ for m in metric_fns], writer=writer)
+        valid_metrics.update('loss', loss.item())
+        for i,met in enumerate(metric_fns):
+            valid_metrics.update(met.__name__, (total_metrics[i].item() / n_samples))
         logger.info(log)
 
 if __name__ == '__main__':
