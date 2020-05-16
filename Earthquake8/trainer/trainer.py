@@ -173,11 +173,11 @@ class Trainer(BaseTrainer):
                 #loss=cross_entropy_loss2d(outputs[o],masks,cuda,)
                 for o in range(10):
                     if modelNo == 6:
-                        loss=loss+0.5*self.criterion(outputs[o],masks)/self.batch_size
+                        loss=loss+0.5*self.criterion(outputs[o],masks)/64
                     else:
                         loss=loss+0.5*self.criterion(outputs[o],masks)
                 if modelNo == 6:
-                    loss=loss+1.1*self.criterion(outputs[-1],masks)/self.batch_size
+                    loss=loss+1.1*self.criterion(outputs[-1],masks)/64
                 else:
                     loss=loss+1.1*self.criterion(outputs[-1],masks)
                 if modelNo == 6:
