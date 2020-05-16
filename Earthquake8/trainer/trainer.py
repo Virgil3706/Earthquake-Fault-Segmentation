@@ -7,6 +7,8 @@ from base import BaseTrainer
 from utils import inf_loop, MetricTracker
 from functions import *
 from model.loss import *
+import argparse
+import torch.nn.functional as F
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 def PR(outputs,labels):
     outputs=outputs.squeeze(1).byte()
@@ -64,7 +66,13 @@ class Trainer(BaseTrainer):
             current = batch_idx
             total = self.len_epoch
         return base.format(current, total, 100.0 * current / total)
+    def adjust_learning_rate(optimizer, steps, step_size, gamma=0.1, logger=None):
+            """Sets the learning rate to the initial LR decayed by 10 every 30 epochs"""
 
+            for param_group in optimizer.param_groups:
+                param_group['lr'] = param_group['lr'] * gamma
+                if logger:
+                    logger.info('%s: %s' % (param_group['name'], param_group['lr']))
 
     def _train_epoch(self, epoch):
         # writer = torch.utils.tensorboard.SummaryWriter('saved/log')
@@ -82,7 +90,11 @@ class Trainer(BaseTrainer):
             masks = Variable(masks.to(device))
             data = images
             target = masks
-            outputs = self.model(images)
+            if modelNo!=6:
+                outputs = self.model(images)
+            else:
+                outputs = self.model(images.repeat(1,3,1,1))
+
             loss = torch.zeros(1).to(device)
             y_preds = outputs
             bceloss = nn.BCELoss()
@@ -103,7 +115,75 @@ class Trainer(BaseTrainer):
                     loss = loss + self.criterion(o, masks)
                 y_preds = outputs[-1]
 
-
+            elif modelNo==6:
+                #args = argparse.ArgumentParser(description='earthquakenew')
+                params_dict = dict(self.model.named_parameters())
+                base_lr = 5e-8
+                weight_decay = 0.0002
+                #logger = args.logger
+                params = []
+                for key, v in params_dict.items():
+                    #print("in the loop")
+                    if re.match(r'conv[1-5]_[1-3]_down', key):
+                        #print("in the condition")
+                        if 'weight' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 0.1, 'weight_decay': weight_decay * 1, 'name': key}]
+                        elif 'bias' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 0.2, 'weight_decay': weight_decay * 0, 'name': key}]
+                    elif re.match(r'.*conv[1-4]_[1-3]', key):
+                        if 'weight' in key:
+                            params += [{'params': v, 'lr': base_lr * 1, 'weight_decay': weight_decay * 1, 'name': key}]
+                        elif 'bias' in key:
+                            params += [{'params': v, 'lr': base_lr * 2, 'weight_decay': weight_decay * 0, 'name': key}]
+                    elif re.match(r'.*conv5_[1-3]', key):
+                        if 'weight' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 100, 'weight_decay': weight_decay * 1, 'name': key}]
+                        elif 'bias' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 200, 'weight_decay': weight_decay * 0, 'name': key}]
+                    elif re.match(r'score_dsn[1-5]', key):
+                        if 'weight' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 0.01, 'weight_decay': weight_decay * 1, 'name': key}]
+                        elif 'bias' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 0.02, 'weight_decay': weight_decay * 0, 'name': key}]
+                    elif re.match(r'upsample_[248](_5)?', key):
+                        if 'weight' in key:
+                            params += [{'params': v, 'lr': base_lr * 0, 'weight_decay': weight_decay * 0, 'name': key}]
+                        elif 'bias' in key:
+                            params += [{'params': v, 'lr': base_lr * 0, 'weight_decay': weight_decay * 0, 'name': key}]
+                    elif re.match(r'.*msblock[1-5]_[1-3]\.conv', key):
+                        if 'weight' in key:
+                            params += [{'params': v, 'lr': base_lr * 1, 'weight_decay': weight_decay * 1, 'name': key}]
+                        elif 'bias' in key:
+                            params += [{'params': v, 'lr': base_lr * 2, 'weight_decay': weight_decay * 0, 'name': key}]
+                    else:
+                        if 'weight' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 0.001, 'weight_decay': weight_decay * 1, 'name': key}]
+                        elif 'bias' in key:
+                            params += [
+                                {'params': v, 'lr': base_lr * 0.002, 'weight_decay': weight_decay * 0, 'name': key}]
+                #optimizer = torch.optim.SGD(params, momentum=args.momentum,
+                #                            lr=args.base_lr, weight_decay=args.weight_decay)
+                #loss=cross_entropy_loss2d(outputs[o],masks,cuda,)
+                for o in range(10):
+                    if modelNo == 6:
+                        loss=loss+0.5*self.criterion(outputs[o],masks)/self.batch_size
+                    else:
+                        loss=loss+0.5*self.criterion(outputs[o],masks)
+                if modelNo == 6:
+                    loss=loss+1.1*self.criterion(outputs[-1],masks)/self.batch_size
+                else:
+                    loss=loss+1.1*self.criterion(outputs[-1],masks)
+                if modelNo == 6:
+                    y_preds=F.sigmoid(outputs[-1])
+                else:
+                    y_preds=outputs[-1]
             loss.backward()
             self.optimizer.step()
             self.optimizer.zero_grad()
@@ -185,6 +265,11 @@ class Trainer(BaseTrainer):
                     loss = loss + self.criterion(o, masks)
                 y_preds = outputs[-1]
             # print("val_loss\n",loss.data)
+             elif modelNo==6:
+                for o in range(10):
+                    loss = loss + 0.5*self.criterion(outputs[o], masks)
+                loss = loss + 1.1*self.criterion(outputs[-1], masks)
+                y_preds = outputs[-1]
             val_losses.append(loss.data)
             predicted_mask = y_preds > best_iou_threshold
 
