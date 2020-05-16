@@ -1,0 +1,71 @@
+{
+    "name": "bdcn",
+    "n_gpu": 1,
+
+    "arch": {
+        "type": "BDCN",
+        "args": {}
+    },
+    "data_loader": {
+
+        "type": "EarthquakeDataLoader",
+        "args":{
+            "seismic_path": "data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
+            "label_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
+            "batch_size": 64,
+            "train_number_of_pictures": 222,
+            "val_number_of_pictures": 64,
+            "train_start": 0,
+            "val_start": 222,
+             "dimension": 1
+        }
+    },
+    "optimizer": {
+
+        "type": "SGD",
+        "args":{
+            "lr": 5e-8,
+
+            "weight_decay": 0.0002,
+            "momentum":0.9
+        }
+    },
+    "loss":"cross_entropy_loss2d",
+    "metrics": [
+        "IoU","accuracy1"
+    ],
+    "lr_scheduler2": {
+        "type": "ReduceLROnPlateau",
+        "args": {
+            "mode":"min",
+            "factor":0.1,
+            "patience":5,
+            "verbose":"True"
+        }
+    },
+    "trainer": {
+        "epochs": 40,
+        "modelNo":6,
+        "save_dir": "saved/",
+        "save_period": 1,
+        "verbosity": 2,
+        "monitor": "min val_loss",
+        "early_stop": 15,
+        "tensorboard": true
+    },
+    "data_loader2": {
+
+        "type": "EarthquakeDataLoader2",
+        "args":{
+            "seismic_path":"data/FYP_data/subGSBxl_t_il.npy",
+            "label_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
+            "batch_size": 64,
+            "val_number_of_pictures": 1,
+            "val_start": 248,
+             "dimension": 0
+        }
+    }
+
+
+}
+
