@@ -6,6 +6,11 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torchsummary import summary
+
+from model_zoo import vgg16_c
+
+from model_zoo.bdcn import MSBlock, get_upsampling_weight
+
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 import os, sys
@@ -636,111 +641,623 @@ class DeepLab(nn.Module):
                         if p.requires_grad:
                             yield p
 
-def conv_block_3d(in_dim, out_dim, activation):
-    return nn.Sequential(
-        nn.Conv3d(in_dim, out_dim, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm3d(out_dim),
-        activation, )
 
 
-def conv_trans_block_3d(in_dim, out_dim, activation):
-    return nn.Sequential(
-        nn.ConvTranspose3d(in_dim, out_dim, kernel_size=3, stride=2, padding=1, output_padding=1),
-        nn.BatchNorm3d(out_dim),
-        activation, )
+#BDCN
+import numpy as np
+import torch
+import torch.nn as nn
+
+import model_zoo.vgg16_c
 
 
-def max_pooling_3d():
-    return nn.MaxPool3d(kernel_size=2, stride=2, padding=0)
+
+import numpy as np
+import torch
+import torch.nn as nn
+
+#import vgg16_c
+from model_zoo import vgg16_c
 
 
-def conv_block_2_3d(in_dim, out_dim, activation):
-    return nn.Sequential(
-        conv_block_3d(in_dim, out_dim, activation),
-        nn.Conv3d(out_dim, out_dim, kernel_size=3, stride=1, padding=1),
-        nn.BatchNorm3d(out_dim), )
+def crop(data1, data2, crop_h, crop_w):
+    _, _, h1, w1 = data1.size()
+    _, _, h2, w2 = data2.size()
+    assert(h2 <= h1 and w2 <= w1)
+    data = data1[:, :, crop_h:crop_h+h2, crop_w:crop_w+w2]
+    return data
 
+def get_upsampling_weight(in_channels, out_channels, kernel_size):
+    """Make a 2D bilinear kernel suitable for upsampling"""
+    factor = (kernel_size + 1) // 2
+    if kernel_size % 2 == 1:
+        center = factor - 1
+    else:
+        center = factor - 0.5
+    og = np.ogrid[:kernel_size, :kernel_size]
+    filt = (1 - abs(og[0] - center) / factor) * \
+           (1 - abs(og[1] - center) / factor)
+    weight = np.zeros((in_channels, out_channels, kernel_size, kernel_size),
+                      dtype=np.float64)
+    weight[range(in_channels), range(out_channels), :, :] = filt
+    return torch.from_numpy(weight).float()
+#好像是SEM的part？
+class MSBlock(nn.Module):
+    #def _init_(self,rate=4):
+    def __init__(self, c_in, rate=4):
+        super(MSBlock, self).__init__()
+        c_out = c_in
+        #c_out=1
+        self.rate = rate
 
-class unet3d(nn.Module):
-    def __init__(self):
-        super(unet3d, self).__init__()
+        self.conv = nn.Conv2d(c_in, 32, 3, stride=1, padding=1)
+        #self.conv = nn.Conv2d(1, 32, 3, stride=1, padding=1)
+        self.relu = nn.ReLU(inplace=True)
+        dilation = self.rate*1 if self.rate >= 1 else 1
+        self.conv1 = nn.Conv2d(32, 32, 3, stride=1, dilation=dilation, padding=dilation)
+        self.relu1 = nn.ReLU(inplace=True)
+        dilation = self.rate*2 if self.rate >= 1 else 1
+        self.conv2 = nn.Conv2d(32, 32, 3, stride=1, dilation=dilation, padding=dilation)
+        self.relu2 = nn.ReLU(inplace=True)
+        dilation = self.rate*3 if self.rate >= 1 else 1
+        self.conv3 = nn.Conv2d(32, 32, 3, stride=1, dilation=dilation, padding=dilation)
+        self.relu3 = nn.ReLU(inplace=True)
 
-        num_filters = 4
-        activation = nn.LeakyReLU(0.2, inplace=True)
-
-        # Down sampling
-        self.down_1 = conv_block_2_3d(1, num_filters, activation)
-        self.pool_1 = max_pooling_3d()
-        self.down_2 = conv_block_2_3d(num_filters, num_filters * 2, activation)
-        self.pool_2 = max_pooling_3d()
-        self.down_3 = conv_block_2_3d(num_filters * 2, num_filters * 4, activation)
-        self.pool_3 = max_pooling_3d()
-        self.down_4 = conv_block_2_3d(num_filters * 4, num_filters * 8, activation)
-        self.pool_4 = max_pooling_3d()
-        self.down_5 = conv_block_2_3d(num_filters * 8, num_filters * 16, activation)
-        self.pool_5 = max_pooling_3d()
-
-        # Bridge
-        self.bridge = conv_block_2_3d(num_filters * 16, num_filters * 32, activation)
-
-        # Up sampling
-        self.trans_1 = conv_trans_block_3d(num_filters * 32, num_filters * 32, activation)
-        self.up_1 = conv_block_2_3d(num_filters * 48, num_filters * 16, activation)
-        self.trans_2 = conv_trans_block_3d(num_filters * 16, num_filters * 16, activation)
-        self.up_2 = conv_block_2_3d(num_filters * 24, num_filters * 8, activation)
-        self.trans_3 = conv_trans_block_3d(num_filters * 8, num_filters * 8, activation)
-        self.up_3 = conv_block_2_3d(num_filters * 12, num_filters * 4, activation)
-        self.trans_4 = conv_trans_block_3d(num_filters * 4, num_filters * 4, activation)
-        self.up_4 = conv_block_2_3d(num_filters * 6, num_filters * 2, activation)
-        self.trans_5 = conv_trans_block_3d(num_filters * 2, num_filters * 2, activation)
-        self.up_5 = conv_block_2_3d(num_filters * 3, num_filters * 1, activation)
-
-        # Output
-        self.out = conv_block_3d(num_filters, 1, nn.Sigmoid())
+        self._initialize_weights()
 
     def forward(self, x):
-        # Down sampling
-        down_1 = self.down_1(x)  # -> [1, 4, 128, 128, 128]
-        pool_1 = self.pool_1(down_1)  # -> [1, 4, 64, 64, 64]
-
-        down_2 = self.down_2(pool_1)  # -> [1, 8, 64, 64, 64]
-        pool_2 = self.pool_2(down_2)  # -> [1, 8, 32, 32, 32]
-
-        down_3 = self.down_3(pool_2)  # -> [1, 16, 32, 32, 32]
-        pool_3 = self.pool_3(down_3)  # -> [1, 16, 16, 16, 16]
-
-        down_4 = self.down_4(pool_3)  # -> [1, 32, 16, 16, 16]
-        pool_4 = self.pool_4(down_4)  # -> [1, 32, 8, 8, 8]
-
-        down_5 = self.down_5(pool_4)  # -> [1, 64, 8, 8, 8]
-        pool_5 = self.pool_5(down_5)  # -> [1, 64, 4, 4, 4]
-
-        # Bridge
-        bridge = self.bridge(pool_5)  # -> [1, 128, 4, 4, 4]
-
-        # Up sampling
-        trans_1 = self.trans_1(bridge)  # -> [1, 128, 8, 8, 8]
-        concat_1 = torch.cat([trans_1, down_5], dim=1)  # -> [1, 192, 8, 8, 8]
-        up_1 = self.up_1(concat_1)  # -> [1, 64, 8, 8, 8]
-
-        trans_2 = self.trans_2(up_1)  # -> [1, 64, 16, 16, 16]
-        concat_2 = torch.cat([trans_2, down_4], dim=1)  # -> [1, 96, 16, 16, 16]
-        up_2 = self.up_2(concat_2)  # -> [1, 32, 16, 16, 16]
-
-        trans_3 = self.trans_3(up_2)  # -> [1, 32, 32, 32, 32]
-        concat_3 = torch.cat([trans_3, down_3], dim=1)  # -> [1, 48, 32, 32, 32]
-        up_3 = self.up_3(concat_3)  # -> [1, 16, 32, 32, 32]
-
-        trans_4 = self.trans_4(up_3)  # -> [1, 16, 64, 64, 64]
-        concat_4 = torch.cat([trans_4, down_2], dim=1)  # -> [1, 24, 64, 64, 64]
-        up_4 = self.up_4(concat_4)  # -> [1, 8, 64, 64, 64]
-
-        trans_5 = self.trans_5(up_4)  # -> [1, 8, 128, 128, 128]
-        concat_5 = torch.cat([trans_5, down_1], dim=1)  # -> [1, 12, 128, 128, 128]
-        up_5 = self.up_5(concat_5)  # -> [1, 4, 128, 128, 128]
-
-        # Output
-        out = self.out(up_5)  # -> [1, 3, 128, 128, 128]
+        o = self.relu(self.conv(x))
+        o1 = self.relu1(self.conv1(o))
+        o2 = self.relu2(self.conv2(o))
+        o3 = self.relu3(self.conv3(o))
+        out = o + o1 + o2 + o3
         return out
 
+    def _initialize_weights(self):
+        for m in self.modules():
+            if isinstance(m, nn.Conv2d):
+                m.weight.data.normal_(0, 0.01)
+                if m.bias is not None:
+                    m.bias.data.zero_()
 
+#这里之所以没有池化是因为这是基于vgg16上的框架弄的，框架上弄了池化操作所以在这个上面就不用再弄
+class BDCN(nn.Module):
+    def __init__(self, pretrain=None, logger=None, rate=4):
+        super(BDCN, self).__init__()
+        self.pretrain = pretrain
+        t = 1
+        #
+        self.features = vgg16_c.VGG16_C(pretrain, logger)
+        self.msblock1_1 = MSBlock(64, rate)
+        self.msblock1_2 = MSBlock(64, rate)
+        self.conv1_1_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv1_2_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.score_dsn1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.score_dsn1_1 = nn.Conv2d(21, 1, 1, stride=1)
+        self.msblock2_1 = MSBlock(128, rate)
+        self.msblock2_2 = MSBlock(128, rate)
+        self.conv2_1_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv2_2_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.score_dsn2 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.score_dsn2_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.msblock3_1 = MSBlock(256, rate)
+        self.msblock3_2 = MSBlock(256, rate)
+        self.msblock3_3 = MSBlock(256, rate)
+        self.conv3_1_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv3_2_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv3_3_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.score_dsn3 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.score_dsn3_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.msblock4_1 = MSBlock(512, rate)
+        self.msblock4_2 = MSBlock(512, rate)
+        self.msblock4_3 = MSBlock(512, rate)
+        self.conv4_1_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv4_2_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv4_3_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.score_dsn4 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.score_dsn4_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.msblock5_1 = MSBlock(512, rate)
+        self.msblock5_2 = MSBlock(512, rate)
+        self.msblock5_3 = MSBlock(512, rate)
+        self.conv5_1_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv5_2_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.conv5_3_down = nn.Conv2d(32*t, 21, (1, 1), stride=1)
+        self.score_dsn5 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.score_dsn5_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        self.upsample_2 = nn.ConvTranspose2d(1, 1, 4, stride=2, bias=False)
+        self.upsample_4 = nn.ConvTranspose2d(1, 1, 8, stride=4, bias=False)
+        self.upsample_8 = nn.ConvTranspose2d(1, 1, 16, stride=8, bias=False)
+        self.upsample_8_5 = nn.ConvTranspose2d(1, 1, 16, stride=8, bias=False)
+        self.fuse = nn.Conv2d(10, 1, 1, stride=1)
+        # self.features = vgg16_c.VGG16_C(pretrain, logger)
+        # self.msblock1_1 = MSBlock(32, rate)
+        # self.msblock1_2 = MSBlock(32, rate)
+        # self.conv1_1_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)#kernel_size=(1,1)
+        # self.conv1_2_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.score_dsn1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.score_dsn1_1 = nn.Conv2d(21, 1, 1, stride=1)
+        # self.msblock2_1 = MSBlock(64, rate)
+        # self.msblock2_2 = MSBlock(64, rate)
+        # self.conv2_1_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.conv2_2_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.score_dsn2 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.score_dsn2_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.msblock3_1 = MSBlock(128, rate)
+        # self.msblock3_2 = MSBlock(128, rate)
+        # self.msblock3_3 = MSBlock(128, rate)
+        # self.conv3_1_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.conv3_2_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.conv3_3_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.score_dsn3 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.score_dsn3_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.msblock4_1 = MSBlock(256, rate)
+        # self.msblock4_2 = MSBlock(256, rate)
+        # self.msblock4_3 = MSBlock(256, rate)
+        # self.conv4_1_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.conv4_2_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.conv4_3_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.score_dsn4 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.score_dsn4_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.msblock5_1 = MSBlock(256, rate)
+        # self.msblock5_2 = MSBlock(256, rate)
+        # self.msblock5_3 = MSBlock(256, rate)
+        # self.conv5_1_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.conv5_2_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.conv5_3_down = nn.Conv2d(32 * t, 21, (1, 1), stride=1)
+        # self.score_dsn5 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.score_dsn5_1 = nn.Conv2d(21, 1, (1, 1), stride=1)
+        # self.upsample_2 = nn.ConvTranspose2d(1, 1, 4, stride=2, bias=False)
+        # self.upsample_4 = nn.ConvTranspose2d(1, 1, 8, stride=4, bias=False)
+        # self.upsample_8 = nn.ConvTranspose2d(1, 1, 16, stride=8, bias=False)
+        # self.upsample_8_5 = nn.ConvTranspose2d(1, 1, 16, stride=8, bias=False)
+        # #self.upsample_2=F.upsample_bilinear(self)
+        # #这个代码里怎么没有含有关池化操作的
+        # #self.maxpool = nn.MaxPool2d(2, stride=2, ceil_mode=True)
+        # #self.maxpool4 = nn.MaxPool2d(2, stride=1, ceil_mode=True)
+        # self.fuse = nn.Conv2d(10, 1, 1, stride=1)
+
+        self._initialize_weights(logger)
+        #print("wtf")
+        #import pdb
+        #pdb.set_trace()
+
+    def forward(self, x):
+        features = self.features(x)
+        print("features", features)
+        import pdb
+        #pdb.set_trace()
+        sum1 = self.conv1_1_down(self.msblock1_1(features[0])) + \
+                self.conv1_2_down(self.msblock1_2(features[1]))
+        s1 = self.score_dsn1(sum1)
+        s11 = self.score_dsn1_1(sum1)
+        # print(s1.data.shape, s11.data.shape)
+        sum2 = self.conv2_1_down(self.msblock2_1(features[2])) + \
+            self.conv2_2_down(self.msblock2_2(features[3]))
+        s2 = self.score_dsn2(sum2)
+        s21 = self.score_dsn2_1(sum2)
+        s2 = self.upsample_2(s2)
+        s21 = self.upsample_2(s21)
+        # print(s2.data.shape, s21.data.shape)
+        s2 = crop(s2, x, 1, 1)
+        s21 = crop(s21, x, 1, 1)
+        sum3 = self.conv3_1_down(self.msblock3_1(features[4])) + \
+            self.conv3_2_down(self.msblock3_2(features[5])) + \
+            self.conv3_3_down(self.msblock3_3(features[6]))
+        s3 = self.score_dsn3(sum3)
+        s3 =self.upsample_4(s3)
+        # print(s3.data.shape)
+        s3 = crop(s3, x, 2, 2)
+        s31 = self.score_dsn3_1(sum3)
+        s31 =self.upsample_4(s31)
+        # print(s31.data.shape)
+        s31 = crop(s31, x, 2, 2)
+        sum4 = self.conv4_1_down(self.msblock4_1(features[7])) + \
+            self.conv4_2_down(self.msblock4_2(features[8])) + \
+            self.conv4_3_down(self.msblock4_3(features[9]))
+        s4 = self.score_dsn4(sum4)
+        s4 = self.upsample_8(s4)
+        # print(s4.data.shape)
+        s4 = crop(s4, x, 4, 4)
+        s41 = self.score_dsn4_1(sum4)
+        s41 = self.upsample_8(s41)
+        # print(s41.data.shape)
+        s41 = crop(s41, x, 4, 4)
+        sum5 = self.conv5_1_down(self.msblock5_1(features[10])) + \
+            self.conv5_2_down(self.msblock5_2(features[11])) + \
+            self.conv5_3_down(self.msblock5_3(features[12]))
+        s5 = self.score_dsn5(sum5)
+        s5 = self.upsample_8_5(s5)
+        # print(s5.data.shape)
+        s5 = crop(s5, x, 0, 0)
+        s51 = self.score_dsn5_1(sum5)
+        s51 = self.upsample_8_5(s51)
+        # print(s51.data.shape)
+        s51 = crop(s51, x, 0, 0)
+        o1, o2, o3, o4, o5 = s1.detach(), s2.detach(), s3.detach(), s4.detach(), s5.detach()
+        o11, o21, o31, o41, o51 = s11.detach(), s21.detach(), s31.detach(), s41.detach(), s51.detach()
+        p1_1 = s1
+        p2_1 = s2 + o1
+        p3_1 = s3 + o2 + o1
+        p4_1 = s4 + o3 + o2 + o1
+        p5_1 = s5 + o4 + o3 + o2 + o1
+        p1_2 = s11 + o21 + o31 + o41 + o51
+        p2_2 = s21 + o31 + o41 + o51
+        p3_2 = s31 + o41 + o51
+        p4_2 = s41 + o51
+        p5_2 = s51
+
+        fuse = self.fuse(torch.cat([p1_1, p2_1, p3_1, p4_1, p5_1, p1_2, p2_2, p3_2, p4_2, p5_2], 1))
+       # print("fuse", fuse)
+
+        return p1_1, p2_1, p3_1, p4_1, p5_1, p1_2, p2_2, p3_2, p4_2, p5_2, fuse
+
+    def _initialize_weights(self, logger=None):
+        for name, param in self.state_dict().items():
+            if self.pretrain and 'features' in name:
+                continue
+            # elif 'down' in name:
+            #     param.zero_()
+            elif 'upsample' in name:
+                if logger:
+                    logger.info('init upsamle layer %s ' % name)
+                k = int(name.split('.')[0].split('_')[1])
+                param.copy_(get_upsampling_weight(1, 1, k*2))
+            elif 'fuse' in name:
+                if logger:
+                    logger.info('init params %s ' % name)
+                if 'bias' in name:
+                    param.zero_()
+                else:
+                    nn.init.constant(param, 0.080)
+            else:
+                if logger:
+                    logger.info('init params %s ' % name)
+                if 'bias' in name:
+                    param.zero_()
+                else:
+                    param.normal_(0, 0.01)
+        # print self.conv1_1_down.weight
+def crop_caffe(location, variable, th, tw):
+    h, w = variable.shape[2], variable.shape[3]
+    x1 = int(location)
+    y1 = int(location)
+    return variable[:, :, y1: y1 + th, x1: x1 + tw]
+def make_bilinear_weights(size, num_channels):
+    factor = (size + 1) // 2
+    if size % 2 == 1:
+        center = factor - 1
+    else:
+        center = factor - 0.5
+    og = np.ogrid[:size, :size]
+    filt = (1 - abs(og[0] - center) / factor) * (1 - abs(og[1] - center) / factor)
+    # print(filt)
+    filt = torch.from_numpy(filt)
+    w = torch.zeros(num_channels, num_channels, size, size)
+    w.requires_grad = False
+    for i in range(num_channels):
+        for j in range(num_channels):
+            if i == j:
+                w[i, j] = filt
+    return w
+# if __name__ == '__main__':
+# #    model = BDCN('./caffemodel2pytorch/vgg16.pth')
+#     a=torch.rand((2,3,100,100))
+#     a=torch.autograd.Variable(a)
+#     for x in model(a):
+#         print (x.data.shape)
+#     # for name, param in model.state_dict().items():
+#     #     print name, param
+#     #copy from the website
+
+
+#if __name__ == '__main__':
+#    model = BDCN('./caffemodel2pytorch/vgg16.pth')
+#    a=torch.rand((2,3,100,100))
+#    a=torch.autograd.Variable(a)
+#    for x in model(a):
+#        print (x.data.shape)
+    # for name, param in model.state_dict().items():
+    #     print name, param
+class rcf_model(nn.Module):
+    def __init__(self):
+
+            super(rcf_model, self).__init__()
+            self.dropout = nn.Dropout(0.2)
+            self.conv1_1 = nn.Conv2d(1, 32, 3, padding=1)
+            self.conv1_2 = nn.Conv2d(32, 32, 3, padding=1)
+
+            self.conv2_1 = nn.Conv2d(32, 64, 3, padding=1)
+            self.conv2_2 = nn.Conv2d(64, 64, 3, padding=1)
+
+            self.conv3_1 = nn.Conv2d(64, 128, 3, padding=1)
+            self.conv3_2 = nn.Conv2d(128, 128, 3, padding=1)
+            self.conv3_3 = nn.Conv2d(128, 128, 3, padding=1)
+
+            self.conv4_1 = nn.Conv2d(128, 256, 3, padding=1)
+            self.conv4_2 = nn.Conv2d(256, 256, 3, padding=1)
+            self.conv4_3 = nn.Conv2d(256, 256, 3, padding=1)
+            self.conv5_1 = nn.Conv2d(256, 256, kernel_size=3,
+                                     stride=1, padding=2, dilation=2)
+            self.conv5_2 = nn.Conv2d(256, 256, kernel_size=3,
+                                     stride=1, padding=2, dilation=2)
+            self.conv5_3 = nn.Conv2d(256, 256, kernel_size=3,
+                                     stride=1, padding=2, dilation=2)
+            # self.conv5_1=nn.Conv2d(256,256,3,padding=1)
+            # self.conv5_2=nn.Conv2d(256,256,3,padding=1)
+            # self.conv5_3=nn.Conv2d(256,256,3,padding=1)
+            self.relu = nn.ReLU()
+            self.maxpool = nn.MaxPool2d(2, stride=2, ceil_mode=True)
+            self.maxpool4 = nn.MaxPool2d(2, stride=1, ceil_mode=True)
+
+            self.conv1_1_down = nn.Conv2d(32, 21, 1, padding=0)
+            self.conv1_2_down = nn.Conv2d(32, 21, 1, padding=0)
+
+            self.conv2_1_down = nn.Conv2d(64, 21, 1, padding=0)
+            self.conv2_2_down = nn.Conv2d(64, 21, 1, padding=0)
+
+            self.conv3_1_down = nn.Conv2d(128, 21, 1, padding=0)
+            self.conv3_2_down = nn.Conv2d(128, 21, 1, padding=0)
+            self.conv3_3_down = nn.Conv2d(128, 21, 1, padding=0)
+
+            self.conv4_1_down = nn.Conv2d(256, 21, 1, padding=0)
+            self.conv4_2_down = nn.Conv2d(256, 21, 1, padding=0)
+            self.conv4_3_down = nn.Conv2d(256, 21, 1, padding=0)
+
+            self.conv5_1_down = nn.Conv2d(256, 21, 1, padding=0)
+            self.conv5_2_down = nn.Conv2d(256, 21, 1, padding=0)
+            self.conv5_3_down = nn.Conv2d(256, 21, 1, padding=0)
+
+            self.dsn1 = nn.Conv2d(21, 1, 1)
+            self.dsn2 = nn.Conv2d(21, 1, 1)
+            self.dsn3 = nn.Conv2d(21, 1, 1)
+            self.dsn4 = nn.Conv2d(21, 1, 1)
+            self.dsn5 = nn.Conv2d(21, 1, 1)
+            self.fuse = nn.Conv2d(5, 1, 1)
+            self.dropout = nn.Dropout2d(p=0.2)
+
+    def forward(self, x):
+                h, w = x.shape[2], x.shape[3]
+                conv1_1 = self.dropout(self.relu(self.conv1_1(x)))
+                conv1_2 = self.dropout(self.relu(self.conv1_2(conv1_1)))
+                pool1 = self.maxpool(conv1_2)
+
+                conv2_1 = self.dropout(self.relu(self.conv2_1(pool1)))
+                conv2_2 = self.dropout(self.relu(self.conv2_2(conv2_1)))
+                pool2 = self.maxpool(conv2_2)
+
+                conv3_1 = self.dropout(self.relu(self.conv3_1(pool2)))
+                conv3_2 = self.dropout(self.relu(self.conv3_2(conv3_1)))
+                conv3_3 = self.dropout(self.relu(self.conv3_3(conv3_2)))
+                pool3 = self.maxpool(conv3_3)
+
+                conv4_1 = self.dropout(self.relu(self.conv4_1(pool3)))
+                conv4_2 = self.dropout(self.relu(self.conv4_2(conv4_1)))
+                conv4_3 = self.dropout(self.relu(self.conv4_3(conv4_2)))
+                pool4 = self.maxpool4(conv4_3)
+
+                conv5_1 = self.dropout(self.relu(self.conv5_1(pool4)))
+                conv5_2 = self.dropout(self.relu(self.conv5_2(conv5_1)))
+                conv5_3 = self.dropout(self.relu(self.conv5_3(conv5_2)))
+
+                conv1_1_down = self.conv1_1_down(conv1_1)
+                conv1_2_down = self.conv1_2_down(conv1_2)
+                conv2_1_down = self.conv2_1_down(conv2_1)
+                conv2_2_down = self.conv2_2_down(conv2_2)
+                conv3_1_down = self.conv3_1_down(conv3_1)
+                conv3_2_down = self.conv3_2_down(conv3_2)
+                conv3_3_down = self.conv3_3_down(conv3_3)
+                conv4_1_down = self.conv4_1_down(conv4_1)
+                conv4_2_down = self.conv4_2_down(conv4_2)
+                conv4_3_down = self.conv4_3_down(conv4_3)
+                conv5_1_down = self.conv5_1_down(conv5_1)
+                conv5_2_down = self.conv5_2_down(conv5_2)
+                conv5_3_down = self.conv5_3_down(conv5_3)
+
+                sumconv1 = self.dsn1(conv1_1_down + conv1_2_down)
+                sumconv2 = self.dsn2(conv2_2_down + conv2_1_down)
+                sumconv3 = self.dsn3(conv3_1_down + conv3_2_down + conv3_3_down)
+                sumconv4 = self.dsn4(conv4_1_down + conv4_2_down + conv4_3_down)
+                sumconv5 = self.dsn5(conv5_1_down + conv5_2_down + conv5_3_down)
+                weight_deconv2 = make_bilinear_weights(4, 1).to(device)
+                weight_deconv3 = make_bilinear_weights(8, 1).to(device)
+                weight_deconv4 = make_bilinear_weights(16, 1).to(device)
+                weight_deconv5 = make_bilinear_weights(32, 1).to(device)
+                upsample2 = torch.nn.functional.conv_transpose2d(sumconv2, weight_deconv2, stride=2)
+                upsample3 = torch.nn.functional.conv_transpose2d(sumconv3, weight_deconv3, stride=4)
+                upsample4 = torch.nn.functional.conv_transpose2d(sumconv4, weight_deconv4, stride=8)
+                upsample5 = torch.nn.functional.conv_transpose2d(sumconv5, weight_deconv5, stride=8)
+
+                so1 = crop_caffe(0, sumconv1, h, w)
+                so2 = crop_caffe(1, upsample2, h, w)
+                so3 = crop_caffe(2, upsample3, h, w)
+                so4 = crop_caffe(4, upsample4, h, w)
+                so5 = crop_caffe(8, upsample5, h, w)
+
+               #  d1 = F.upsample_bilinear(so1,size=(h,w))
+               #  #d1=sumconv1
+               #  d2 = F.upsample_bilinear(so2, size=(h, w))
+               #  d3 = F.upsample_bilinear(so3,size=(h,w))
+               #
+               # # d3 = F.upsample_bilinear(self.dsn3(sumconv3), size=(h, w))
+               #  d4 = F.upsample_bilinear(so4, size=(h, w))
+               #  d5 = F.upsample_bilinear(so5, size=(h, w))
+
+                fuse = self.fuse(torch.cat((so1, so2, so3, so4, so5), 1))
+
+                # fuse1=torch.cat(d1,d2,d3,d4,d5)
+                d1 = torch.sigmoid(so1)
+                d2 = torch.sigmoid(so2)
+                d3 = torch.sigmoid(so3)
+                d4 = torch.sigmoid(so4)
+                d5=torch.sigmoid(so5)
+                # fuse = self.fuse(torch.cat((d1, d2, d3, d4, d5), 1))
+                # fuse=nn.Conv2d(32,1,1)
+
+                fuse_result = torch.sigmoid(fuse)
+
+                # results = [d1, d2, d3, d4, d5, fuse]
+                # results = [torch.sigmoid(r) for r in results]
+                return d1, d2, d3, d4, d5, fuse_result
+
+def crop_caffe(location, variable, th, tw):
+                     h, w = variable.shape[2], variable.shape[3]
+                     x1 = int(location)
+                     y1 = int(location)
+                     return variable[:, :, y1: y1 + th, x1: x1 + tw]
+
+def make_bilinear_weights(size, num_channels):
+                    factor = (size + 1) // 2
+                    if size % 2 == 1:
+                        center = factor - 1
+                    else:
+                        center = factor - 0.5
+                    og = np.ogrid[:size, :size]
+                    filt = (1 - abs(og[0] - center) / factor) * (1 - abs(og[1] - center) / factor)
+                    # print(filt)
+                    filt = torch.from_numpy(filt)
+                    w = torch.zeros(num_channels, num_channels, size, size)
+                    w.requires_grad = False
+                    for i in range(num_channels):
+                        for j in range(num_channels):
+                            if i == j:
+                                w[i, j] = filt
+                    return w
+
+
+class hed_model(nn.Module):
+    def __init__(self):
+        super(hed_model, self).__init__()
+        self.conv1 = nn.Sequential(
+            # conv1
+            nn.Conv2d(1, 32, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(32, 32, 3, padding=1),
+            nn.ReLU(inplace=True),
+
+        )
+        self.conv2 = nn.Sequential(
+            # conv2
+            nn.MaxPool2d(2, stride=2, ceil_mode=True),  # 1/2
+            nn.Conv2d(32, 64, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(64, 64, 3, padding=1),
+            nn.ReLU(inplace=True),
+
+        )
+        self.conv3 = nn.Sequential(
+            # conv3
+            nn.MaxPool2d(2, stride=2, ceil_mode=True),  # 1/4
+            nn.Conv2d(64, 128, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(128, 128, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(128, 128, 3, padding=1),
+            nn.ReLU(inplace=True),
+
+        )
+        self.conv4 = nn.Sequential(
+            # conv4
+            nn.MaxPool2d(2, stride=2, ceil_mode=True),  # 1/8
+            nn.Conv2d(128, 256, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, 3, padding=1),
+            nn.ReLU(inplace=True),
+
+        )
+        self.conv5 = nn.Sequential(
+            # conv5
+            nn.MaxPool2d(2, stride=2, ceil_mode=True),  # 1/16
+            nn.Conv2d(256, 256, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, 3, padding=1),
+            nn.ReLU(inplace=True),
+            nn.Conv2d(256, 256, 3, padding=1),
+            nn.ReLU(inplace=True),
+        )
+
+        self.dsn1 = nn.Conv2d(32, 1, 1)
+        self.dsn2 = nn.Conv2d(64, 1, 1)
+        self.dsn3 = nn.Conv2d(128, 1, 1)
+        self.dsn4 = nn.Conv2d(256, 1, 1)
+        self.dsn5 = nn.Conv2d(256, 1, 1)
+        self.fuse = nn.Conv2d(5, 1, 1)
+
+    def forward(self, x):
+        h = x.size(2)
+        w = x.size(3)
+
+        conv1 = self.conv1(x)
+        conv2 = self.conv2(conv1)
+        conv3 = self.conv3(conv2)
+        conv4 = self.conv4(conv3)
+        conv5 = self.conv5(conv4)
+
+        so1_out = self.dsn1(conv1)
+        so2_out = self.dsn2(conv2)
+        so3_out = self.dsn3(conv3)
+        so4_out = self.dsn4(conv4)
+        so5_out = self.dsn5(conv5)
+        weight_deconv2 = make_bilinear_weights(4, 1).to(device)
+        weight_deconv3 = make_bilinear_weights(8, 1).to(device)
+        weight_deconv4 = make_bilinear_weights(16, 1).to(device)
+        weight_deconv5 = make_bilinear_weights(32, 1).to(device)
+        upsample2 = torch.nn.functional.conv_transpose2d(so2_out, weight_deconv2, stride=2)
+        upsample3 = torch.nn.functional.conv_transpose2d(so3_out, weight_deconv3, stride=4)
+        upsample4 = torch.nn.functional.conv_transpose2d(so4_out, weight_deconv4, stride=8)
+        upsample5 = torch.nn.functional.conv_transpose2d(so5_out, weight_deconv5, stride=8)
+        d1 = crop_caffe(0, so1_out, h, w)
+        d2 = crop_caffe(1, upsample2, h, w)
+        d3 = crop_caffe(2, upsample3, h, w)
+        d4 = crop_caffe(4, upsample4, h, w)
+        d5 = crop_caffe(8, upsample5, h, w)
+        ## side output
+        d1 = self.dsn1(conv1)
+        d2 = F.upsample_bilinear(self.dsn2(conv2), size=(h, w))
+        d3 = F.upsample_bilinear(self.dsn3(conv3), size=(h, w))
+        d4 = F.upsample_bilinear(self.dsn4(conv4), size=(h, w))
+        d5 = F.upsample_bilinear(self.dsn5(conv5), size=(h, w))
+
+        # dsn fusion output
+        fuse = self.fuse(torch.cat((d1, d2, d3, d4, d5), 1))
+        #results=[d1,d2,d3,d4,d5,fuse]
+        d1 = F.sigmoid(d1)
+        d2 = F.sigmoid(d2)
+        d3 = F.sigmoid(d3)
+        d4 = F.sigmoid(d4)
+        d5 = F.sigmoid(d5)
+        fuse = F.sigmoid(fuse)
+        #results=(d1+d2+d3+d4+d5+fuse)/6
+       # results = [d1, d2, d3, d4, d5, fuse]
+        #fusecat = torch.cat((d1, d2, d3, d4, d5), dim=1)
+        #fuse_1 = self.fuse(fusecat)
+        #results = [d1, d2,d3, d4, d5, fuse]
+       # results = [torch.sigmoid(r) for r in results]
+        #fuse = F.sigmoid(fuse)
+        #results=[d1,d2,d3,d4,d5,fuse]
+        return d1,d2,d3,d4,d5,fuse
+
+    def crop_caffe(location, variable, th, tw):
+        h, w = variable.shape[2], variable.shape[3]
+        x1 = int(location)
+        y1 = int(location)
+        return variable[:, :, y1: y1 + th, x1: x1 + tw]
+
+    def make_bilinear_weights(size, num_channels):
+        factor = (size + 1) // 2
+        if size % 2 == 1:
+            center = factor - 1
+        else:
+            center = factor - 0.5
+        og = np.ogrid[:size, :size]
+        filt = (1 - abs(og[0] - center) / factor) * (1 - abs(og[1] - center) / factor)
+        # print(filt)
+        filt = torch.from_numpy(filt)
+        w = torch.zeros(num_channels, num_channels, size, size)
+        w.requires_grad = False
+        for i in range(num_channels):
+            for j in range(num_channels):
+                if i == j:
+                    w[i, j] = filt
+        return w
