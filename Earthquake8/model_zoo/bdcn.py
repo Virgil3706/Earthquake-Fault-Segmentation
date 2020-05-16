@@ -169,7 +169,7 @@ class BDCN(nn.Module):
 
     def forward(self, x):
         features = self.features(x)
-        print("features", features)
+        #print("features", features)
         import pdb
         pdb.set_trace()
         sum1 = self.conv1_1_down(self.msblock1_1(features[0])) + \
@@ -233,7 +233,7 @@ class BDCN(nn.Module):
         p5_2 = s51
 
         fuse = self.fuse(torch.cat([p1_1, p2_1, p3_1, p4_1, p5_1, p1_2, p2_2, p3_2, p4_2, p5_2], 1))
-        print("fuse", fuse)
+        #print("fuse", fuse)
 
         return p1_1, p2_1, p3_1, p4_1, p5_1, p1_2, p2_2, p3_2, p4_2, p5_2, fuse
 
