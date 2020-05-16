@@ -2,10 +2,11 @@ import math
 import torch.nn as nn
 import torch.utils.model_zoo as model_zoo
 from model_zoo.DEEPLAB.sync_batchnorm.batchnorm import SynchronizedBatchNorm2d
-
+#print("#######################################use resnet#################################################")
 class Bottleneck(nn.Module):
     expansion = 4
-
+#这个时候用的是stride，应该有shortcut，如果stride=2，则没有shortcut，就是那个正常的三段式block
+    #先降维再升维再降维
     def __init__(self, inplanes, planes, stride=1, dilation=1, downsample=None, BatchNorm=None):
         super(Bottleneck, self).__init__()
         self.conv1 = nn.Conv2d(inplanes, planes, kernel_size=1, bias=False)
@@ -58,7 +59,8 @@ class ResNet(nn.Module):
             raise NotImplementedError
 
         # Modules
-        self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
+        #self.conv1 = nn.Conv2d(3, 64, kernel_size=7, stride=2, padding=3,
+        self.conv1 = nn.Conv2d(1, 64, kernel_size=7, stride=2, padding=3,
                                 bias=False)
         self.bn1 = BatchNorm(64)
         self.relu = nn.ReLU(inplace=True)
@@ -145,18 +147,24 @@ class ResNet(nn.Module):
         state_dict.update(model_dict)
         self.load_state_dict(state_dict)
 
+#def ResNet101(output_stride, BatchNorm, pretrained=True):
 def ResNet101(output_stride, BatchNorm, pretrained=True):
     """Constructs a ResNet-101 model.
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model = ResNet(Bottleneck, [3, 4, 23, 3], output_stride, BatchNorm, pretrained=pretrained)
+    model = ResNet(Bottleneck, [3, 4, 23, 3], output_stride, BatchNorm, pretrained=False)
+    #model = ResNet(Bottleneck, [3, 4, 23, 3], output_stride, BatchNorm, pretrained=pretrained)
     return model
 
 if __name__ == "__main__":
     import torch
-    model = ResNet101(BatchNorm=nn.BatchNorm2d, pretrained=True, output_stride=8)
+    #model = ResNet101(BatchNorm=nn.BatchNorm2d, pretrained=True, output_stride=8)#原来好像是8
+    model = ResNet101(BatchNorm=nn.BatchNorm2d, pretrained=False, output_stride=8)#原来好像是8
+
     input = torch.rand(1, 3, 512, 512)
-    output, low_level_feat = model(input)
+    #input = torch.rand(1, 1, 512, 512)
+    output,low_level_feat = model(input)
     print(output.size())
     print(low_level_feat.size())
+    #不知道这些不同的out stride有什么区别，8，16什么的
