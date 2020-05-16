@@ -265,7 +265,7 @@ class Trainer(BaseTrainer):
                     loss = loss + self.criterion(o, masks)
                 y_preds = outputs[-1]
             # print("val_loss\n",loss.data)
-             elif modelNo==6:
+            elif modelNo==6:
                 for o in range(10):
                     loss = loss + 0.5*self.criterion(outputs[o], masks)
                 loss = loss + 1.1*self.criterion(outputs[-1], masks)
