@@ -105,7 +105,26 @@ def main(config):
                     loss = loss + loss_fn(o, masks)
                 y_preds = outputs[-1]
             # print("val_loss\n",loss.data)
-
+            elif modelNo == 6:
+                # args = argparse.ArgumentParser(description='earthquakenew')
+                params_dict = dict(model.named_parameters())
+                base_lr = 5e-8
+                weight_decay = 0.0002
+                # logger = args.logger
+                # params = []
+                for o in range(10):
+                    if modelNo == 6:
+                        loss = loss + 0.5 * loss_fn(outputs[o], masks) / 64
+                    else:
+                        loss = loss + 0.5 * loss_fn(outputs[o], masks)
+                if modelNo == 6:
+                    loss = loss + 1.1 * loss_fn(outputs[-1], masks) / 64
+                else:
+                    loss = loss + 1.1 * loss_fn(outputs[-1], masks)
+                if modelNo == 6:
+                    y_preds = F.sigmoid(outputs[-1])
+                else:
+                    y_preds = outputs[-1]
             predicted_mask = y_preds > best_iou_threshold
             writer.set_step(1, 'test')
             writer.add_pr_curve('precision_recall_curve', 1, masks, y_preds)
