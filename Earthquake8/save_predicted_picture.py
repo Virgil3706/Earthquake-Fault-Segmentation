@@ -103,13 +103,20 @@ def main(config):
     with torch.no_grad():
         for images in tqdm(data_loader):
             images = Variable(images.to(device))
-            outputs = model(images)
+            if modelNo!=6:
+                outputs = model(images)
+            else:
+                outputs = model(images.repeat(1,3,1,1))
             y_preds = outputs
+            #outputs = model(images)
+            #y_preds = outputs
             if modelNo == 2:
                 y_preds = outputs[-2]
             elif modelNo == 3:
                 y_preds = outputs[-1]
             #
+            elif modelNo ==6 :
+                y_preds=outputs[-1]
             predicted_mask = y_preds > best_iou_threshold
             y_preds=predicted_mask
             #
