@@ -81,11 +81,15 @@ def main(config):
     with torch.no_grad():
         for i, (data, target) in enumerate(tqdm(data_loader)):
             data, target = data.to(device), target.to(device)
-            output = model(data)
-            outputs=output
+            #output = model(data)
+            #outputs=output
             images=data
             masks=target
-
+            if modelNo != 6:
+                outputs = model(images)
+            else:
+                #print("-----------------wtf")
+                outputs = model(images.repeat(1, 3, 1, 1))
             # computing loss, metrics on test set
             loss = torch.zeros(1).to(device)
             y_preds = outputs
