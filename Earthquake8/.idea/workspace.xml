@@ -1,25 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="0b558fa8-f907-4aeb-aa62-40eb63533450" name="Default Changelist" comment="" />
+    <list default="true" id="0b558fa8-f907-4aeb-aa62-40eb63533450" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="DatabaseView">
-    <option name="SHOW_INTERMEDIATE" value="true" />
-    <option name="GROUP_DATA_SOURCES" value="true" />
-    <option name="GROUP_SCHEMA" value="true" />
-    <option name="GROUP_CONTENTS" value="false" />
-    <option name="SORT_POSITIONED" value="false" />
-    <option name="SHOW_EMPTY_GROUPS" value="false" />
-    <option name="AUTO_SCROLL_FROM_SOURCE" value="false" />
-    <option name="HIDDEN_KINDS">
-      <set />
-    </option>
-    <expand />
-    <select />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -30,7 +19,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
   <component name="JupyterTrust" id="c4f3f1e0-c4f0-40c6-962b-35719f05f853" />
   <component name="ProjectId" id="1YDUc723Nl2VBqDKKAMEzj2cIFR" />
@@ -44,6 +33,7 @@
   <component name="PropertiesComponent">
     <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="node.js.detected.package.eslint" value="true" />
@@ -60,7 +50,7 @@
       <recent name="$PROJECT_DIR$/data_loader" />
     </key>
   </component>
-  <component name="RunManager" selected="Python.GAN2">
+  <component name="RunManager" selected="Python.fault_visu">
     <configuration name="GAN" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="pytorch-template" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -173,7 +163,6 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.GAN2" />
         <item itemvalue="Python.train" />
         <item itemvalue="Python.save_predicted_picture" />
         <item itemvalue="Python.read" />
@@ -251,6 +240,7 @@
       <workItem from="1587446213147" duration="735000" />
       <workItem from="1587446967207" duration="3000" />
       <workItem from="1587982687923" duration="1722000" />
+      <workItem from="1589638358424" duration="1530000" />
     </task>
     <servers />
   </component>
@@ -402,8 +392,8 @@
     <state x="294" y="237" key="com.intellij.ide.util.TipDialog/0.0.1280.800@0.0.1280.800" timestamp="1585377563637" />
     <state x="294" y="237" key="com.intellij.ide.util.TipDialog/0.23.1280.732@0.23.1280.732" timestamp="1583816274869" />
     <state x="294" y="239" key="com.intellij.ide.util.TipDialog/0.23.1280.738@0.23.1280.738" timestamp="1583902450613" />
-    <state x="374" y="239" width="689" height="486" key="find.popup" timestamp="1586942708843">
-      <screen x="0" y="0" width="1280" height="748" />
+    <state x="561" y="347" width="1034" height="660" key="find.popup" timestamp="1589639376086">
+      <screen x="0" y="23" width="1920" height="1015" />
     </state>
     <state x="374" y="239" width="689" height="486" key="find.popup/0.0.1280.748@0.0.1280.748" timestamp="1586942708843" />
     <state x="374" y="239" width="689" height="486" key="find.popup/0.0.1280.749@0.0.1280.749" timestamp="1586853384518" />
@@ -411,6 +401,7 @@
     <state x="368" y="238" width="689" height="472" key="find.popup/0.0.1280.757@0.0.1280.757" timestamp="1583246739470" />
     <state x="374" y="255" width="689" height="486" key="find.popup/0.0.1280.800@0.0.1280.800" timestamp="1585139426660" />
     <state x="428" y="273" width="802" height="546" key="find.popup/0.0.1440.855@0.0.1440.855" timestamp="1583677997959" />
+    <state x="561" y="347" width="1034" height="660" key="find.popup/0.23.1920.1015@0.23.1920.1015" timestamp="1589639376086" />
     <state x="305" y="137" width="671" height="619" key="search.everywhere.popup" timestamp="1583759737228">
       <screen x="0" y="23" width="1280" height="732" />
     </state>
