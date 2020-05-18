@@ -111,7 +111,7 @@ class Trainer(BaseTrainer):
                     loss = loss + self.criterion(outputs[o], masks)
                 loss = loss + bceloss(outputs[-1], masks)
                 y_preds = outputs[-1]
-            elif modelNo == 3:
+            elif modelNo == 3 or modelNo == 5:
                 for o in outputs:
                     loss = loss + self.criterion(o, masks)
                 y_preds = outputs[-1]
