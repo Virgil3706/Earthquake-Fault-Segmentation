@@ -10,6 +10,9 @@ from datetime import datetime
 from model.model import unet3d
 import cv2
 import cmapy
+from model.loss import bceloss
+from model.metric import IoU3d,accuracy3d
+import numpy as np
 
 torch.manual_seed(1)
 np.random.seed(1)
@@ -27,7 +30,7 @@ def main():
     test_set_loader = test_set.test_loader
     model = unet3d()
 
-    model.load_state_dict(torch.load('saved/models/unet3d/0423_104719/model_best.pth')['state_dict'])
+    model.load_state_dict(torch.load('saved/models/unet3d/0508_094416/model_best.pth')['state_dict'])
     cube = np.zeros((64,500,1200))
     blocks = []
     print('-'*30)
@@ -48,7 +51,7 @@ def main():
 
 
     r = 32
-    step = 48
+    step = 32
     x = 0
     for i in range(r, cube.shape[0] - r + 1, step):
         for j in range(r, cube.shape[1] - r + 1, step):
@@ -59,7 +62,7 @@ def main():
     cube_overlap = np.zeros((64,500,1200))
 
     r = 32
-    step = 48
+    step = 32
     x = 0
     for i in range(r, cube.shape[0] - r + 1, step):
         for j in range(r, cube.shape[1] - r + 1, step):
@@ -72,7 +75,7 @@ def main():
 
 
     #run_id = datetime.now().strftime(r'%m%d_%H%M%S')
-    save_path ='saved/picture/unet3d/new'
+    save_path ='saved/picture/unet3d/newdataset'
 
     seismic_path = 'data/FYP_data/seis_sub_350IL_500t_1200XL.npy'
     label_path = 'data/FYP_data/fault_sub_350IL_500t_1200XL.npy'
@@ -80,10 +83,36 @@ def main():
     seismic = np.load(seismic_path, allow_pickle=True)
     fault = np.load(label_path)
 
+    total_loss = 0.0
+    metrics = torch.zeros(2)
+    total_metrics = torch.zeros(2)
+
     print('-'*30)
+    cnt1 = 0
     for index in range(0,64):
         a = cube[index,:,:]
+        output = a
+        target = fault[index+286,:,:]
+        output = np.nan_to_num(output)
+        output = output.astype(np.float32)
+        target = target.astype(np.float32)
 
+        predicted_mask = output > 0.5
+
+        target1 = target > 0.5
+        predicted_mask = torch.tensor(predicted_mask)
+        target1 = torch.tensor(target1)
+
+        metrics[0] = IoU3d(predicted_mask, target1)
+        total_metrics[0] += metrics[0]
+        print("-"*30)
+        print("IoU: ", metrics[0].item()*100,"%")
+        metrics[1] = accuracy3d(predicted_mask, target)
+        total_metrics[1] += metrics[1]
+        print("accuracy: ", metrics[1].item()*100,"%")
+        cnt1+=1
+
+        
 
         heatmap_img = cv2.applyColorMap((a * 255).astype(np.uint8), cmapy.cmap('jet_r'))
         plt.figure(figsize=(10, 8))
@@ -107,6 +136,10 @@ def main():
         # print(b)
         # a=blendTwoImages(label,'{}/{}_{}.png'.format(save_path,run_id,str(index)),'saved/ab.png')
         # b=blendTwoImages(a,seismic)
+    
+    print("-"*30)
+    print("total IoU: ", total_metrics[0].item()/cnt1*100,"%")
+    print("total accuracy: ", total_metrics[1].item()/cnt1*100,"%")
 
 if __name__ == '__main__':
     main()
