@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0b558fa8-f907-4aeb-aa62-40eb63533450" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../Cyclegan/CycleGAN.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/../Cyclegan/CycleGAN.ipynb" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Cyclegan/Untitled0_earthquake0 (1).ipynb" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/666.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -242,7 +242,7 @@
       <workItem from="1587446967207" duration="3000" />
       <workItem from="1587982687923" duration="1722000" />
       <workItem from="1589638358424" duration="1530000" />
-      <workItem from="1589978503090" duration="1643000" />
+      <workItem from="1589978503090" duration="2226000" />
     </task>
     <servers />
   </component>
