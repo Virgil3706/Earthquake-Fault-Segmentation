@@ -1,6 +1,6 @@
 import torch
 
-from functions import iou_pytorch,acc_metrics
+from functions import iou_pytorch,acc_metrics,iou_pytorch1
 
 best_iou_threshold=0.5
 
