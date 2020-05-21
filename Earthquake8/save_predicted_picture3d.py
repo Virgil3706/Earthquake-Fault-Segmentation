@@ -21,7 +21,7 @@ args ={"seismic_path":"data/FYP_data/seis_sub_350IL_500t_1200XL.npy",
             "label_path": "data/FYP_data/fault_sub_350IL_500t_1200XL.npy",
             "batch_size": 8,
             "test_number_of_pictures": 64,
-            "test_start": 286,
+            "test_start": 284,
             "dimension": 0
         }
         
@@ -30,7 +30,7 @@ def main():
     test_set_loader = test_set.test_loader
     model = unet3d()
 
-    model.load_state_dict(torch.load('saved/models/unet3d/0508_094416/model_best.pth')['state_dict'])
+    model.load_state_dict(torch.load('saved/models/unet3d/0521_022910/model_best.pth')['state_dict'])
     cube = np.zeros((64,500,1200))
     blocks = []
     print('-'*30)
@@ -51,7 +51,7 @@ def main():
 
 
     r = 32
-    step = 32
+    step = 48
     x = 0
     for i in range(r, cube.shape[0] - r + 1, step):
         for j in range(r, cube.shape[1] - r + 1, step):
@@ -62,7 +62,7 @@ def main():
     cube_overlap = np.zeros((64,500,1200))
 
     r = 32
-    step = 32
+    step = 48
     x = 0
     for i in range(r, cube.shape[0] - r + 1, step):
         for j in range(r, cube.shape[1] - r + 1, step):
@@ -75,13 +75,18 @@ def main():
 
 
     #run_id = datetime.now().strftime(r'%m%d_%H%M%S')
-    save_path ='saved/picture/unet3d/newdataset'
+    save_path ='saved/picture/unet3d/new'
 
     seismic_path = 'data/FYP_data/seis_sub_350IL_500t_1200XL.npy'
     label_path = 'data/FYP_data/fault_sub_350IL_500t_1200XL.npy'
 
     seismic = np.load(seismic_path, allow_pickle=True)
     fault = np.load(label_path)
+
+    
+    # from logger import TensorboardWriter
+    # cfg_trainer = trainer
+    # writer = TensorboardWriter(cfg_trainer['tensorboard'])
 
     total_loss = 0.0
     metrics = torch.zeros(2)
@@ -97,7 +102,18 @@ def main():
         output = output.astype(np.float32)
         target = target.astype(np.float32)
 
+        # writer.set_step(1, 'test')
+        # writer.add_pr_curve('precision_recall_curve', 1, target, output)
+        # from utils import inf_loop, MetricTracker. 
+
+        # loss = torch.zeros(1).to(device)
+        # loss = bceloss(output, target)
+        # print(loss)
+
         predicted_mask = output > 0.5
+
+        # total_loss += loss.item()
+
 
         target1 = target > 0.5
         predicted_mask = torch.tensor(predicted_mask)
