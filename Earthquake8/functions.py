@@ -372,6 +372,11 @@ def iou_pytorch(outputs: torch.Tensor, labels: torch.Tensor):
     #     return thresholded  # Or thresholded.mean() if you are interested in average across the batch
     return iou
 
+def iou_pytorch1(outputs: torch.Tensor, labels: torch.Tensor):
+    intersection = (outputs & labels).float().sum()  # Will be zero if Truth=0 or Prediction=0
+    union = (outputs | labels).float().sum()  # Will be zero if both are 0
+    iou = (intersection + SMOOTH) / (union + SMOOTH)  # We smooth our devision to avoid 0/0
+    return iou
 
 def iou_numpy(outputs: np.array, labels: np.array):
     #     outputs = outputs.squeeze(1)
